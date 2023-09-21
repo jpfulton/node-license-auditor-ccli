@@ -25,9 +25,7 @@ export function auditToMarkdown(pathToProject: string): void {
     pathToProject,
     warnMarkdown,
     errorMarkdown
-  );
-
-  console.log("");
+  ).then(() => console.log(""));
 }
 
 const warnMarkdown = (licenseObj: License) => {
