@@ -33,7 +33,7 @@ const warnMarkdown = (licenseObj: License) => {
 };
 
 const errorMarkdown = (licenseObj: License) => {
-  markdown(":red_circle", licenseObj);
+  markdown(":red_circle:", licenseObj);
 };
 
 const markdown = (icon: string, licenseItem: License) => {
