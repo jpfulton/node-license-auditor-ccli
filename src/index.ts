@@ -2,10 +2,17 @@
 
 import chalk from "chalk";
 import { CommanderError, program } from "commander";
+import { auditToMarkdown } from "./commands/audit-to-markdown.js";
 
 program.description("A CLI for auditing node package licenses.");
 
 program.showHelpAfterError();
+
+program
+  .command("markdown")
+  .argument("<pathToProject>", "Path to project to audit.")
+  .description("Output package license audit to markdown.")
+  .action(auditToMarkdown);
 
 try {
   await program.parseAsync();
