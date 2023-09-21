@@ -42,17 +42,17 @@ const markdown = (icon: string, licenseItem: License) => {
 | ${licenseItem.name} 
 | ${licenseItem.version} 
 | ${licenseItem.licenses} 
+| ${licenseItem.publisher ?? ""} 
+| ${licenseItem.email ?? ""} 
+| ${licenseItem.repository ?? ""}
 | ${licenseItem.path} 
-| ${licenseItem.licensePath} 
-| ${licenseItem.repository} 
-| ${licenseItem.publisher} 
-| ${licenseItem.email ?? ""} |`.replaceAll("\n", "")
+| ${licenseItem.licensePath}  |`.replaceAll("\n", "")
   );
 };
 
 const markdownTableHeader = () => {
   console.log(
-    "|  | NAME | VERSION | LICENSE | MODULE PATH | LICENSE PATH | REPOSITORY | PUBLISHER | EMAIL |"
+    "|  | NAME | VERSION | LICENSE | PUBLISHER | EMAIL | REPOSITORY | MODULE PATH | LICENSE PATH |"
   );
   console.log("|---|---|---|---|---|---|---|---|---|");
 };
