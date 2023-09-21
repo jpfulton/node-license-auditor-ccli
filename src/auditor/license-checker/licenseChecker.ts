@@ -120,10 +120,12 @@ export const findAllLicenses = (projectPath: string) =>
           .filter((x) => x)
           .filter(
             (x) =>
-              /node_modules\/[0-9A-Za-z-]*\/package\.json$/.test(x) ||
-              /node_modules\/@[0-9A-Za-z-]*\/[0-9A-Za-z-]*\/package\.json$/.test(
-                x
-              )
+              // edit out paths with "test" to eliminate test fixtures
+              !/.*test.*/.test(x) &&
+              (/node_modules\/[0-9A-Za-z-]*\/package\.json$/.test(x) ||
+                /node_modules\/@[0-9A-Za-z-]*\/[0-9A-Za-z-]*\/package\.json$/.test(
+                  x
+                ))
           );
 
         const data = packages
