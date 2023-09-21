@@ -6,8 +6,8 @@ import parseLicensesFactory from "./parseLicenses.js";
 const checkLicenses = async (
   whitelistedLicenses: string[],
   blacklistedLicenses: string[],
-  // whitelistedModules = {},
   projectPath: string,
+  infoOutputter: (license: License) => void,
   warnOutputter: (license: License) => void,
   errorOutputter: (license: License) => void
 ) => {
@@ -25,6 +25,7 @@ const checkLicenses = async (
     const parse = parseLicensesFactory(
       whitelistedLicenses,
       blacklistedLicenses,
+      infoOutputter,
       warnOutputter,
       errorOutputter
     );

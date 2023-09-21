@@ -5,6 +5,7 @@ const parseLicenses =
   (
     whitelistedLicenses: string[],
     blacklistedLicenses: string[],
+    infoOutputter: (license: License) => void,
     warnOutputter: (license: License) => void,
     errorOutputter: (license: License) => void
   ) =>
@@ -31,7 +32,7 @@ const parseLicenses =
           );
 
       if (isWhitelisted) {
-        return;
+        return infoOutputter(licenseObj);
       }
 
       const isBlacklisted = Array.isArray(licenseObj.licenses)

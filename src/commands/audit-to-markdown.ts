@@ -23,10 +23,15 @@ export function auditToMarkdown(pathToProject: string): void {
     whitelist,
     blacklist,
     pathToProject,
+    infoMarkdown,
     warnMarkdown,
     errorMarkdown
   ).then(() => console.log(""));
 }
+
+const infoMarkdown = (licenseObj: License) => {
+  markdown(":green_circle:", licenseObj);
+};
 
 const warnMarkdown = (licenseObj: License) => {
   markdown(":yellow_circle:", licenseObj);
