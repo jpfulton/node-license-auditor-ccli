@@ -1,1 +1,1 @@
-# node-license-auditor-ccli
+# node-license-auditor-cli
