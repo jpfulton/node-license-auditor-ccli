@@ -14,6 +14,9 @@ export function auditToMarkdown(pathToProject: string): void {
   console.log(`# Package Dependencies Audit Report: ${rootProjectName}`);
   console.log("");
 
+  console.log(`> Generated at ${new Date().toUTCString()}`);
+  console.log("");
+
   markdownTableHeader();
 
   licenseAuditor(
@@ -37,13 +40,21 @@ const errorMarkdown = (licenseObj: License) => {
 
 const markdown = (icon: string, licenseItem: License) => {
   console.log(
-    `| ${icon} | ${licenseItem.path} | ${licenseItem.licenses} | ${licenseItem.licensePath} | ${licenseItem.repository} | ${licenseItem.publisher} | ${licenseItem.email} | ${licenseItem.version} |`
+    `| ${icon} 
+| ${licenseItem.name} 
+| ${licenseItem.version} 
+| ${licenseItem.licenses} 
+| ${licenseItem.path} 
+| ${licenseItem.licensePath} 
+| ${licenseItem.repository} 
+| ${licenseItem.publisher} 
+| ${licenseItem.email ?? ""} |`.replaceAll("\n", "")
   );
 };
 
 const markdownTableHeader = () => {
   console.log(
-    "|  | MODULE PATH | LICENSE | LICENSE PATH | REPOSITORY | PUBLISHER | EMAIL | VERSION |"
+    "|  | NAME | VERSION | LICENSE | MODULE PATH | LICENSE PATH | REPOSITORY | PUBLISHER | EMAIL |"
   );
-  console.log("|---|---|---|---|---|---|---|---|");
+  console.log("|---|---|---|---|---|---|---|---|---|");
 };

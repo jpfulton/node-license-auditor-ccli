@@ -143,6 +143,9 @@ export const findAllLicenses = (projectPath: string) =>
           version: item.version,
           rootProjectName: rootProjectName,
         }));
+
+        licenseData.sort((a, b) => a.name.localeCompare(b.name));
+
         resolve(licenseData);
       }
     );
