@@ -1,4 +1,5 @@
 export interface License {
+  rootProjectName: string;
   path: string;
   licenses: string[] | string;
   licensePath: string;

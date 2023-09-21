@@ -100,6 +100,11 @@ const findLicense = async (item: any, dirPath: string) => {
 
 export const findAllLicenses = (projectPath: string) =>
   new Promise<License[]>((resolve, reject) => {
+    const rootProject = JSON.parse(
+      readFileSync(`${projectPath}/package.json`).toString()
+    );
+    const rootProjectName = rootProject?.name ?? "UNKNOWN";
+
     exec(
       `find ${projectPath}/node_modules -name "package.json"`,
       async (err, stdout, stderr) => {
@@ -136,6 +141,7 @@ export const findAllLicenses = (projectPath: string) =>
           publisher: get(item, "author.name", item.author),
           email: get(item, "author.email"),
           version: item.version,
+          rootProjectName: rootProjectName,
         }));
         resolve(licenseData);
       }
