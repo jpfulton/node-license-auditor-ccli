@@ -1,20 +1,24 @@
-import { readFileSync } from "fs";
 import licenseAuditor from "../auditor/checkLicenses.js";
 
 import blacklist from "../default-license-configurations/blacklist.js";
 import whitelist from "../default-license-configurations/whitelist.js";
 import { License } from "../models/license.js";
+import {
+  getCurrentVersionString,
+  getRootProjectName,
+} from "../util/root-project.js";
 
 export function auditToMarkdown(pathToProject: string): void {
-  const rootProject = JSON.parse(
-    readFileSync(`${pathToProject}/package.json`).toString()
-  );
-  const rootProjectName = rootProject?.name ?? "UNKNOWN";
+  const rootProjectName = getRootProjectName(pathToProject);
+  const version = getCurrentVersionString();
 
   console.log(`# Package Dependencies Audit Report: ${rootProjectName}`);
   console.log("");
 
-  console.log(`> Generated at ${new Date().toUTCString()}`);
+  console.log(`> Generated at ${new Date().toUTCString()} <br />`);
+  console.log(
+    `> Generated using version ${version} of node-license-auditor-cli.`
+  );
   console.log("");
 
   markdownTableHeader();
