@@ -1,6 +1,6 @@
 {
   "name": "@jpfulton/node-license-auditor-cli",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A CLI for listing and auditing node module dependencies.",
   "keywords": [],
   "main": "./dist",
