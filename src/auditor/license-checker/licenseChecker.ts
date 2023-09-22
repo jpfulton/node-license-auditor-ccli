@@ -157,7 +157,7 @@ export const findAllLicenses = (projectPath: string) =>
   });
 
 // remove duplicates based on common name, version and licenses array
-const removeDuplicates = (licenseData: License[]): License[] => {
+export const removeDuplicates = (licenseData: License[]): License[] => {
   return licenseData.filter(
     (license, index, array) =>
       !array.some(
