@@ -147,14 +147,15 @@ export const findAllLicenses = (projectPath: string) =>
         }));
 
         // remove duplicates based on common name, version and licenses array
+        // use some() to account for multiple duplicates
         licenseData.filter(
-          (license, index, array) =>
-            array.findIndex(
+          (license, _index, array) =>
+            !array.some(
               (l) =>
                 l.name == license.name &&
                 l.version == license.version &&
                 l.licenses == license.licenses
-            ) == index
+            )
         );
 
         // sort by name
