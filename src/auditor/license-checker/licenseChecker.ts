@@ -146,6 +146,18 @@ export const findAllLicenses = (projectPath: string) =>
           rootProjectName: rootProjectName,
         }));
 
+        // remove duplicates based on common name, version and licenses array
+        licenseData.filter(
+          (license, index, array) =>
+            array.findIndex(
+              (l) =>
+                l.name == license.name &&
+                l.version == license.version &&
+                l.licenses == license.licenses
+            ) == index
+        );
+
+        // sort by name
         licenseData.sort((a, b) => a.name.localeCompare(b.name));
 
         resolve(licenseData);
