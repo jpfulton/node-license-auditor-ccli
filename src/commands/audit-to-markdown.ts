@@ -49,9 +49,9 @@ const markdown = (icon: string, licenseItem: License) => {
 | ${licenseItem.licenses} 
 | ${licenseItem.publisher ?? ""} 
 | ${licenseItem.email ?? ""} 
-| ${licenseItem.repository ?? ""}
+| ${licenseItem.repository ?? ""} 
 | ${licenseItem.path} 
-| ${licenseItem.licensePath}  |`.replaceAll("\n", "")
+| ${licenseItem.licensePath} |`.replaceAll("\n", "")
   );
 };
 
