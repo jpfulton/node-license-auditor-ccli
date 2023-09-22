@@ -135,7 +135,7 @@ export const findAllLicenses = (projectPath: string) =>
           }))
           .filter((item) => item.name);
 
-        const licenseData: License[] = await mapSeries(data, async (item) => ({
+        let licenseData: License[] = await mapSeries(data, async (item) => ({
           ...(await findLicense(item, dirPath)),
           path: item.path,
           name: item.name,
@@ -146,18 +146,7 @@ export const findAllLicenses = (projectPath: string) =>
           rootProjectName: rootProjectName,
         }));
 
-        // remove duplicates based on common name, version and licenses array
-        // use some() to account for multiple duplicates
-        licenseData.filter(
-          (license, index, array) =>
-            !array.some(
-              (l, i) =>
-                i !== index &&
-                l.name == license.name &&
-                l.version == license.version &&
-                l.licenses == license.licenses
-            )
-        );
+        licenseData = removeDuplicates(licenseData);
 
         // sort by name
         licenseData.sort((a, b) => a.name.localeCompare(b.name));
@@ -167,4 +156,16 @@ export const findAllLicenses = (projectPath: string) =>
     );
   });
 
-// export default findAllLicenses;
+// remove duplicates based on common name, version and licenses array
+const removeDuplicates = (licenseData: License[]): License[] => {
+  return licenseData.filter(
+    (license, index, array) =>
+      !array.some(
+        (l, i) =>
+          i !== index &&
+          l.name == license.name &&
+          l.version == license.version &&
+          l.licenses == license.licenses
+      )
+  );
+};
