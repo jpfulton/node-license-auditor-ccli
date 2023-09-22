@@ -1,7 +1,7 @@
 {
   "name": "@jpfulton/node-license-auditor-cli",
   "version": "0.0.6",
-  "description": "A Twilio-based SMS notifier CLI for network administration.",
+  "description": "A CLI for listing and auditing node module dependencies.",
   "keywords": [],
   "main": "./dist",
   "repository": "git@github.com:jpfulton/node-license-auditor-cli.git",
