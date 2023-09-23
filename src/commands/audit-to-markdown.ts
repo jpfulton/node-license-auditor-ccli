@@ -21,33 +21,50 @@ export function auditToMarkdown(pathToProject: string): void {
   );
   console.log("");
 
-  markdownTableHeader();
-
   licenseAuditor(
     whitelist,
     blacklist,
     pathToProject,
+    metadataMarkdown,
     infoMarkdown,
     warnMarkdown,
     errorMarkdown
   ).then(() => console.log(""));
 }
 
+const metadataMarkdown = (
+  uniqueCount: number,
+  whitelistedCount: number,
+  warnCount: number,
+  blacklistedCount: number
+) => {
+  console.log(`## Metadata`);
+  console.log(
+    `| Unique Licenses | Whitelisted Licenses | Warned Licenses | Blacklisted Licenses |`
+  );
+  console.log(`|---|---|---|---|`);
+  console.log(
+    `| ${uniqueCount} | ${whitelistedCount} | ${warnCount} | ${blacklistedCount} |`
+  );
+  console.log("");
+
+  markdownTableHeader();
+};
+
 const infoMarkdown = (licenseObj: License) => {
-  markdown(":green_circle:", licenseObj);
+  return markdown(":green_circle:", licenseObj);
 };
 
 const warnMarkdown = (licenseObj: License) => {
-  markdown(":yellow_circle:", licenseObj);
+  return markdown(":yellow_circle:", licenseObj);
 };
 
 const errorMarkdown = (licenseObj: License) => {
-  markdown(":red_circle:", licenseObj);
+  return markdown(":red_circle:", licenseObj);
 };
 
-const markdown = (icon: string, licenseItem: License) => {
-  console.log(
-    `| ${icon} 
+const markdown = (icon: string, licenseItem: License): string => {
+  return `| ${icon} 
 | ${licenseItem.name} 
 | ${licenseItem.version} 
 | ${licenseItem.licenses} 
@@ -55,11 +72,12 @@ const markdown = (icon: string, licenseItem: License) => {
 | ${licenseItem.email ?? ""} 
 | ${licenseItem.repository ?? ""} 
 | ${licenseItem.path} 
-| ${licenseItem.licensePath} |`.replaceAll("\n", "")
-  );
+| ${licenseItem.licensePath} |`.replaceAll("\n", ""); // Remove newlines from the license text
 };
 
 const markdownTableHeader = () => {
+  console.log("## Licenses");
+  console.log("");
   console.log(
     "|  | NAME | VERSION | LICENSE | PUBLISHER | EMAIL | REPOSITORY | MODULE PATH | LICENSE PATH |"
   );

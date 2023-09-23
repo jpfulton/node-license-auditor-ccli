@@ -7,9 +7,15 @@ const checkLicenses = async (
   whitelistedLicenses: string[],
   blacklistedLicenses: string[],
   projectPath: string,
-  infoOutputter: (license: License) => void,
-  warnOutputter: (license: License) => void,
-  errorOutputter: (license: License) => void
+  metadataOutputter: (
+    uniqueCount: number,
+    whitelistedCount: number,
+    warnCount: number,
+    blacklistedCount: number
+  ) => void,
+  infoOutputter: (license: License) => string,
+  warnOutputter: (license: License) => string,
+  errorOutputter: (license: License) => string
 ) => {
   if (!projectPath) {
     return console.error(noPathSpecified);
@@ -30,7 +36,23 @@ const checkLicenses = async (
       errorOutputter
     );
 
-    parse(licenses);
+    const result = parse(licenses);
+    const {
+      uniqueCount,
+      whitelistedCount,
+      warnCount,
+      blacklistedCount,
+      outputs,
+    } = result;
+
+    metadataOutputter(
+      uniqueCount,
+      whitelistedCount,
+      warnCount,
+      blacklistedCount
+    );
+
+    outputs.forEach((output) => console.log(output));
   } catch (err) {
     console.error((err as Error).message);
   }

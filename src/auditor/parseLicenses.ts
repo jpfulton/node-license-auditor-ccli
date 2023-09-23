@@ -1,38 +1,38 @@
 import { License } from "../models/license.js";
-// import messages from "./messages.js";
 
 const parseLicenses =
   (
     whitelistedLicenses: string[],
     blacklistedLicenses: string[],
-    infoOutputter: (license: License) => void,
-    warnOutputter: (license: License) => void,
-    errorOutputter: (license: License) => void
+    infoOutputter: (license: License) => string,
+    warnOutputter: (license: License) => string,
+    errorOutputter: (license: License) => string
   ) =>
-  (licenses: License[]) => {
+  (
+    licenses: License[]
+  ): {
+    uniqueCount: number;
+    whitelistedCount: number;
+    warnCount: number;
+    blacklistedCount: number;
+    outputs: string[];
+  } => {
+    let whitelistedCount = 0;
+    let warnCount = 0;
+    let blacklistedCount = 0;
+
+    const outputs: string[] = [];
+
     licenses.forEach((licenseObj) => {
-      // const whitelistedLicenseForModule = whitelistedModules[licenseObj.name];
-      // if (whitelistedLicenseForModule === 'any') {
-      //  return;
-      // }
-
-      // const whitelistedLicensesForModule = Array.isArray(whitelistedLicenseForModule)
-      //   ? whitelistedLicenseForModule
-      //  : [whitelistedLicenseForModule];
-      const whitelistedLicensesForModule: string[] = [];
-
       const isWhitelisted = Array.isArray(licenseObj.licenses)
         ? licenseObj.licenses.every((license) =>
-            [...whitelistedLicenses, ...whitelistedLicensesForModule].includes(
-              license
-            )
+            whitelistedLicenses.includes(license)
           )
-        : [...whitelistedLicenses, ...whitelistedLicensesForModule].includes(
-            licenseObj.licenses
-          );
+        : whitelistedLicenses.includes(licenseObj.licenses);
 
       if (isWhitelisted) {
-        return infoOutputter(licenseObj);
+        whitelistedCount++;
+        outputs.push(infoOutputter(licenseObj));
       }
 
       const isBlacklisted = Array.isArray(licenseObj.licenses)
@@ -42,13 +42,23 @@ const parseLicenses =
         : blacklistedLicenses.includes(licenseObj.licenses);
 
       if (!isWhitelisted && !isBlacklisted) {
-        return warnOutputter(licenseObj);
+        warnCount++;
+        outputs.push(warnOutputter(licenseObj));
       }
 
       if (isBlacklisted) {
-        return errorOutputter(licenseObj);
+        blacklistedCount++;
+        outputs.push(errorOutputter(licenseObj));
       }
     });
+
+    return {
+      uniqueCount: licenses.length,
+      whitelistedCount: whitelistedCount,
+      warnCount: warnCount,
+      blacklistedCount: blacklistedCount,
+      outputs: outputs,
+    };
   };
 
 export default parseLicenses;
