@@ -40,7 +40,7 @@ const metadataMarkdown = (
 ) => {
   console.log(`## Metadata`);
   console.log(
-    `| Unique Licenses | Whitelisted Licenses | Warned Licenses | Blacklisted Licenses |`
+    `| :hash: Unique Licenses | :green_circle: Whitelisted Licenses | :yellow_circle: Warned Licenses | :red_circle: Blacklisted Licenses |`
   );
   console.log(`|---|---|---|---|`);
   console.log(
