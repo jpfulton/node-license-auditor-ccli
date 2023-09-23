@@ -1,4 +1,4 @@
-import { License } from "../models/license.js";
+import { LicenseOutputter, MetadataOutputter } from "../util/outputters.js";
 import { findAllLicenses } from "./license-checker/licenseChecker.js";
 import { noLicenses, noPathSpecified } from "./messages.js";
 import parseLicensesFactory from "./parseLicenses.js";
@@ -7,15 +7,10 @@ const checkLicenses = async (
   whitelistedLicenses: string[],
   blacklistedLicenses: string[],
   projectPath: string,
-  metadataOutputter: (
-    uniqueCount: number,
-    whitelistedCount: number,
-    warnCount: number,
-    blacklistedCount: number
-  ) => void,
-  infoOutputter: (license: License) => string,
-  warnOutputter: (license: License) => string,
-  errorOutputter: (license: License) => string
+  metadataOutputter: MetadataOutputter,
+  infoOutputter: LicenseOutputter,
+  warnOutputter: LicenseOutputter,
+  errorOutputter: LicenseOutputter
 ) => {
   if (!projectPath) {
     return console.error(noPathSpecified);

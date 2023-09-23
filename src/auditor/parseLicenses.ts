@@ -1,12 +1,13 @@
 import { License } from "../models/license.js";
+import { LicenseOutputter } from "../util/outputters.js";
 
 const parseLicenses =
   (
     whitelistedLicenses: string[],
     blacklistedLicenses: string[],
-    infoOutputter: (license: License) => string,
-    warnOutputter: (license: License) => string,
-    errorOutputter: (license: License) => string
+    infoOutputter: LicenseOutputter,
+    warnOutputter: LicenseOutputter,
+    errorOutputter: LicenseOutputter
   ) =>
   (
     licenses: License[]
