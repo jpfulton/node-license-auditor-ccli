@@ -39,3 +39,12 @@ examples
 
 # Modern Yarn directory
 .yarn
+
+# Project specific files
+tests
+.babelrc
+.eslintrc.json
+.yarnrc.yml
+jest.config.ts
+tsconfig.json
+tsconfig.debug.json
