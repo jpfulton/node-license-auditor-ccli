@@ -1,12 +1,30 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
-import { CommanderError, program } from "commander";
+import { CommanderError, Option, program } from "commander";
+import { auditToCsv } from "./commands/audit-to-csv.js";
 import { auditToMarkdown } from "./commands/audit-to-markdown.js";
 
 program.description("A CLI for auditing node package licenses.");
 
 program.showHelpAfterError();
+
+program
+  .command("csv")
+  .argument("<pathToProject>", "Path to project to audit.")
+  .addOption(
+    new Option(
+      "-w, --write-headers <writeHeaders>",
+      "Write headers to CSV."
+    ).default(true)
+  )
+  .addOption(
+    new Option("-d, --write-data <writeData>", "Write data to CSV.").default(
+      true
+    )
+  )
+  .description("Output package license audit to CSV.")
+  .action(auditToCsv);
 
 program
   .command("markdown")
