@@ -2,7 +2,14 @@
   "name": "@jpfulton/node-license-auditor-cli",
   "version": "0.0.21",
   "description": "A CLI for listing and auditing node module dependencies.",
-  "keywords": [],
+  "keywords": [
+    "node",
+    "cli",
+    "module",
+    "dependency",
+    "license",
+    "audit"
+  ],
   "main": "./dist",
   "repository": "git@github.com:jpfulton/node-license-auditor-cli.git",
   "author": "J. Patrick Fulton <jpatrick.fulton@gmail.com>",
