@@ -38,7 +38,7 @@ const findFile = (filename: string, dirPath: string) =>
         if (stderr) {
           console.error(stderr);
         }
-        resolve(stdout.replace(`${dirPath}/`, "").replace(/\n/, ""));
+        resolve(stdout.replace(`${dirPath}/`, "").replace(/\n/gm, ""));
       }
     );
   });
