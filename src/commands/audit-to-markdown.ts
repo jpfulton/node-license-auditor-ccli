@@ -18,6 +18,9 @@ export async function auditToMarkdown(pathToProject: string): Promise<void> {
   console.log(
     `> Generated using version ${version} of node-license-auditor-cli.`
   );
+  console.log(
+    `> Configuration source used: ${configuration.configurationSource}`
+  );
   console.log("");
 
   licenseAuditor(

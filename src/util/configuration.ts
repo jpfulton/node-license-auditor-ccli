@@ -7,6 +7,7 @@ const DEFAULT_CONFIG_FILE_NAME = ".license-checker.json";
 const defaultConfiguration: Configuration = {
   whiteList: whitelist,
   blackList: blacklist,
+  configurationSource: "default",
 };
 
 // return a configuration object from a file
@@ -20,7 +21,10 @@ export default async function getConfiguration(
       `${process.cwd()}/${configFileName}`
     );
 
-    return configurationFile.default;
+    const configuration = configurationFile.default as Configuration;
+    configuration.configurationSource = "file";
+
+    return configuration;
   } catch (e) {
     return defaultConfiguration;
   }

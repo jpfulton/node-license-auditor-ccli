@@ -10,6 +10,7 @@ describe("getConfiguration", () => {
     expect(result).toEqual({
       blackList: blacklist,
       whiteList: whitelist,
+      configurationSource: "default",
     } as Configuration);
   });
 
@@ -19,6 +20,7 @@ describe("getConfiguration", () => {
     expect(result).toEqual({
       blackList: ["blacklisted-license"],
       whiteList: ["whitelisted-license"],
+      configurationSource: "file",
     } as Configuration);
   });
 });
