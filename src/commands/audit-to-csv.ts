@@ -11,12 +11,16 @@ export function auditToCsv(
   pathToProject: string,
   options: { writeHeaders: boolean; writeData: boolean }
 ): void {
-  const rootProjectName = getRootProjectName(pathToProject);
-  const version = getCurrentVersionString();
+  if (options.writeHeaders && options.writeData) {
+    const rootProjectName = getRootProjectName(pathToProject);
 
-  if (options.writeHeaders) {
     console.log(`Package Dependencies Audit Report: ${rootProjectName}`);
     console.log("");
+  }
+
+  if (options.writeHeaders) {
+    const version = getCurrentVersionString();
+
     console.log(`Generated at ${new Date().toUTCString()}`);
     console.log(
       `Generated using version ${version} of node-license-auditor-cli`
