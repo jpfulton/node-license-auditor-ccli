@@ -1,3 +1,4 @@
+import { readFile } from "fs/promises";
 import blacklist from "../default-configuration/blacklist.js";
 import whitelist from "../default-configuration/whitelist.js";
 import { Configuration } from "../models/configuration.js";
@@ -16,12 +17,12 @@ export default async function getConfiguration(
   configFileName: string = DEFAULT_CONFIG_FILE_NAME
 ): Promise<Configuration> {
   try {
-    // get the configuration file from the current working directory
-    const configurationFile = await import(
-      `${process.cwd()}/${configFileName}`
-    );
-
-    const configuration = configurationFile.default as Configuration;
+    // read the configuration JSON file into a Configuration object
+    // pull the file from the current working directory with the file name
+    // provided by the configFileName parameter
+    const configuration = JSON.parse(
+      await readFile(`${process.cwd()}/${configFileName}`, "utf8")
+    ) as Configuration;
     configuration.configurationSource = "file";
 
     return configuration;

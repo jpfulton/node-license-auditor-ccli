@@ -16,7 +16,7 @@ export async function auditToMarkdown(pathToProject: string): Promise<void> {
 
   console.log(`> Generated at ${new Date().toUTCString()} <br />`);
   console.log(
-    `> Generated using version ${version} of node-license-auditor-cli.`
+    `> Generated using version ${version} of node-license-auditor-cli. <br />`
   );
   console.log(
     `> Configuration source used: ${configuration.configurationSource}`
