@@ -1,5 +1,5 @@
 import { LicenseOutputter, MetadataOutputter } from "../util/outputters.js";
-import { findAllLicenses } from "./license-checker/licenseChecker.js";
+import { findAllLicenses } from "./licenseChecker.js";
 import { noLicenses, noPathSpecified } from "./messages.js";
 import parseLicensesFactory from "./parseLicenses.js";
 

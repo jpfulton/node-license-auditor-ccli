@@ -10,8 +10,8 @@ const { get } = lodash;
 
 import Retriever from "./retriever.js";
 
-import { License } from "../../models/license.js";
-import constants from "../../util/constants.js";
+import { License } from "../models/license.js";
+import constants from "../util/constants.js";
 const { templates, licenseMap, licenseFiles, readmeFiles } = constants;
 
 const findDirPath = () =>

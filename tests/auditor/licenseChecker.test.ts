@@ -1,5 +1,5 @@
-import { removeDuplicates } from "../../../src/auditor/license-checker/licenseChecker";
-import { License } from "../../../src/models/license";
+import { removeDuplicates } from "../../src/auditor/licenseChecker";
+import { License } from "../../src/models/license";
 
 // removeDuplicates should remove duplicate licenses based on common name,
 // version and licenses array
