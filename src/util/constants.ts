@@ -6,9 +6,10 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const templates: Record<string, string> = {
-  [readFileSync(`${__dirname}/templates/BSD-2-Clause.txt`).toString()]:
-    "BSD 2-Clause",
-  [readFileSync(`${__dirname}/templates/MIT.txt`).toString()]: "MIT",
+  [readFileSync(
+    `${__dirname}/../auditor/templates/BSD-2-Clause.txt`
+  ).toString()]: "BSD 2-Clause",
+  [readFileSync(`${__dirname}/../auditor/templates/MIT.txt`).toString()]: "MIT",
 };
 
 const licenseMap: Record<string, string> = {
