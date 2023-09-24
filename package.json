@@ -49,7 +49,7 @@
     "build": "tsc",
     "build-debug": "tsc --project tsconfig.debug.json",
     "clean": "rm -rf dist",
-    "copy-assets": "cp -R ./src/auditor/license-checker/templates/ ./dist/auditor/license-checker/templates/",
+    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/auditor/templates/",
     "lint": "eslint . --fix",
     "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/index.js",
     "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/index.js",
