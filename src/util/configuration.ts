@@ -15,7 +15,11 @@ export default async function getConfiguration(
   configFileName: string = DEFAULT_CONFIG_FILE_NAME
 ): Promise<Configuration> {
   try {
-    const configurationFile = await import(`../../${configFileName}`);
+    // get the configuration file from the current working directory
+    const configurationFile = await import(
+      `${process.cwd()}/${configFileName}`
+    );
+
     return configurationFile.default;
   } catch (e) {
     return defaultConfiguration;
