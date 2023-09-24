@@ -9,16 +9,16 @@ import {
 
 export function auditToCsv(
   pathToProject: string,
-  options: { writeHeaders: boolean; writeData: boolean }
+  options: { headers: boolean; data: boolean }
 ): void {
-  if (options.writeHeaders && options.writeData) {
+  if (options.headers && options.data) {
     const rootProjectName = getRootProjectName(pathToProject);
 
     console.log(`Package Dependencies Audit Report: ${rootProjectName}`);
     console.log("");
   }
 
-  if (options.writeHeaders) {
+  if (options.headers) {
     const version = getCurrentVersionString();
 
     console.log(`Generated at ${new Date().toUTCString()}`);
@@ -32,15 +32,17 @@ export function auditToCsv(
     );
   }
 
-  licenseAuditor(
-    whitelist,
-    blacklist,
-    pathToProject,
-    metadataCsv,
-    infoCsv,
-    warnCsv,
-    errorCsv
-  );
+  if (options.data) {
+    licenseAuditor(
+      whitelist,
+      blacklist,
+      pathToProject,
+      metadataCsv,
+      infoCsv,
+      warnCsv,
+      errorCsv
+    );
+  }
 }
 
 const metadataCsv = (
