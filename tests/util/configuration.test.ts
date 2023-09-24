@@ -1,5 +1,5 @@
-import blacklist from "../../src/default-license-configurations/blacklist.js";
-import whitelist from "../../src/default-license-configurations/whitelist.js";
+import blacklist from "../../src/default-configuration/blacklist.js";
+import whitelist from "../../src/default-configuration/whitelist.js";
 import { Configuration } from "../../src/models/configuration.js";
 import getConfiguration from "../../src/util/configuration.js";
 

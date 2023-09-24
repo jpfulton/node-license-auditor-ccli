@@ -1,5 +1,5 @@
-import blacklist from "../default-license-configurations/blacklist.js";
-import whitelist from "../default-license-configurations/whitelist.js";
+import blacklist from "../default-configuration/blacklist.js";
+import whitelist from "../default-configuration/whitelist.js";
 import { Configuration } from "../models/configuration.js";
 
 const DEFAULT_CONFIG_FILE_NAME = ".license-checker.json";

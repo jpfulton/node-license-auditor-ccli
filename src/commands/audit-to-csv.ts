@@ -1,6 +1,6 @@
 import licenseAuditor from "../auditor/checkLicenses.js";
-import blacklist from "../default-license-configurations/blacklist.js";
-import whitelist from "../default-license-configurations/whitelist.js";
+import blacklist from "../default-configuration/blacklist.js";
+import whitelist from "../default-configuration/whitelist.js";
 import { License } from "../models/license.js";
 
 export function auditToCsv(
