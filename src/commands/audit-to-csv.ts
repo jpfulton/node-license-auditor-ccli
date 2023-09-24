@@ -1,12 +1,13 @@
 import licenseAuditor from "../auditor/checkLicenses.js";
-import blacklist from "../default-configuration/blacklist.js";
-import whitelist from "../default-configuration/whitelist.js";
 import { License } from "../models/license.js";
+import getConfiguration from "../util/configuration.js";
 
-export function auditToCsv(
+export async function auditToCsv(
   pathToProject: string,
   options: { headers: boolean; data: boolean }
-): void {
+): Promise<void> {
+  const configuration = await getConfiguration();
+
   if (options.headers) {
     console.log(
       `Project Name,Audit Status,Package Name,Package Version,Package License,Package Publisher,Package Publisher Email,Package Repository,Package Module Path,Package License Path`
@@ -15,8 +16,8 @@ export function auditToCsv(
 
   if (options.data) {
     licenseAuditor(
-      whitelist,
-      blacklist,
+      configuration.whiteList,
+      configuration.blackList,
       pathToProject,
       metadataCsv,
       infoCsv,

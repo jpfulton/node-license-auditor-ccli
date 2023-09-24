@@ -1,16 +1,15 @@
 import licenseAuditor from "../auditor/checkLicenses.js";
-
-import blacklist from "../default-configuration/blacklist.js";
-import whitelist from "../default-configuration/whitelist.js";
 import { License } from "../models/license.js";
+import getConfiguration from "../util/configuration.js";
 import {
   getCurrentVersionString,
   getRootProjectName,
 } from "../util/root-project.js";
 
-export function auditToMarkdown(pathToProject: string): void {
+export async function auditToMarkdown(pathToProject: string): Promise<void> {
   const rootProjectName = getRootProjectName(pathToProject);
   const version = getCurrentVersionString();
+  const configuration = await getConfiguration();
 
   console.log(`# Package Dependencies Audit Report: ${rootProjectName}`);
   console.log("");
@@ -22,8 +21,8 @@ export function auditToMarkdown(pathToProject: string): void {
   console.log("");
 
   licenseAuditor(
-    whitelist,
-    blacklist,
+    configuration.whiteList,
+    configuration.blackList,
     pathToProject,
     metadataMarkdown,
     infoMarkdown,
