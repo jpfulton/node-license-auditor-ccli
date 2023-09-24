@@ -2,31 +2,12 @@ import licenseAuditor from "../auditor/checkLicenses.js";
 import blacklist from "../default-license-configurations/blacklist.js";
 import whitelist from "../default-license-configurations/whitelist.js";
 import { License } from "../models/license.js";
-import {
-  getCurrentVersionString,
-  getRootProjectName,
-} from "../util/root-project.js";
 
 export function auditToCsv(
   pathToProject: string,
   options: { headers: boolean; data: boolean }
 ): void {
-  if (options.headers && options.data) {
-    const rootProjectName = getRootProjectName(pathToProject);
-
-    console.log(`Package Dependencies Audit Report: ${rootProjectName}`);
-    console.log("");
-  }
-
   if (options.headers) {
-    const version = getCurrentVersionString();
-
-    console.log(`Generated at ${new Date().toUTCString()}`);
-    console.log(
-      `Generated using version ${version} of node-license-auditor-cli`
-    );
-    console.log("");
-
     console.log(
       `Project Name,Audit Status,Package Name,Package Version,Package License,Package Publisher,Package Publisher Email,Package Repository,Package Module Path,Package License Path`
     );
