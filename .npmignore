@@ -41,6 +41,7 @@ examples
 .yarn
 
 # Project specific files
+example-configs
 tests
 .babelrc
 .eslintrc.json
