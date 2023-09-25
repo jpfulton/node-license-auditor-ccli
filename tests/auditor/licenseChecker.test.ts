@@ -3,6 +3,7 @@ import {
   findFile,
   findLicense,
   removeDuplicates,
+  splitAndFilterPackages,
 } from "../../src/auditor/licenseChecker";
 import { License } from "../../src/models/license";
 
@@ -312,5 +313,31 @@ describe("removeDuplicates", () => {
     const result = removeDuplicates(licenseData);
 
     expect(result.length).toBe(2);
+  });
+});
+
+// splitAndFilterPackages should split the packages into an array of packages
+// and remove any empty lines
+// and filter out paths with "test" to eliminate test fixtures
+// and filter out paths that do not include node_modules/PACKAGE_NAME/package.json or
+// node_modules/@SCOPE/PACKAGE_NAME/package.json
+describe("splitAndFilterPackages", () => {
+  it("should split the packages into an array of packages", () => {
+    const stdout = `node_modules/@types/node/package.json
+node_modules/@types/node/LICENSE
+node_modules/@types/node/README.md
+node_modules/sample/package.json
+node_modules/sample/LICENSE
+node_modules/sample/README.md
+node_modules/sample/node_modules/@types/node/package.json
+node_modules/sample/node_modules/@types/node/LICENSE
+node_modules/sample/node_modules/@types/node/README.md
+node_modules/sample/node_modules/test/package.json
+node_modules/sample/node_modules/test/LICENSE
+node_modules/sample/node_modules/test/README.md`;
+
+    const result = splitAndFilterPackages(stdout);
+
+    expect(result.length).toBe(3);
   });
 });

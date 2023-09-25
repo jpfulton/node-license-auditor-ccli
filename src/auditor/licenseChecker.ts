@@ -168,20 +168,7 @@ export const findAllLicenses = (projectPath: string) =>
         const dirPath = (await findDirPath()) as string;
 
         // split stdout from the command into lines
-        const packages = stdout
-          .split("\n")
-          .filter((x) => x) // filter out empty lines
-          .filter(
-            (x) =>
-              // filter out paths with "test" to eliminate test fixtures
-              !/.*test.*/.test(x) &&
-              // filter out paths that do not end with node_modules/PACKAGE_NAME/package.json
-              // or node_modules/@SCOPE/PACKAGE_NAME/package.json
-              (/node_modules\/[0-9A-Za-z-]*\/package\.json$/.test(x) ||
-                /node_modules\/@[0-9A-Za-z-]*\/[0-9A-Za-z-]*\/package\.json$/.test(
-                  x
-                ))
-          );
+        const packages = splitAndFilterPackages(stdout);
 
         // get the content of each package.json file and parse it
         // add it to an array of objects where each object contains the path and parsed
@@ -270,5 +257,19 @@ export const removeDuplicates = (licenseData: License[]): License[] => {
 
   return result;
 };
+
+export function splitAndFilterPackages(stdout: string): string[] {
+  return stdout
+    .split("\n")
+    .filter((x) => x) // filter out empty lines
+    .filter((x) => !/.*test.*/.test(x)) // filter out paths with "test" to eliminate test fixtures
+    .filter(
+      (x) =>
+        // filter out paths that do not end with node_modules/PACKAGE_NAME/package.json
+        // or node_modules/@SCOPE/PACKAGE_NAME/package.json
+        /node_modules\/[0-9A-Za-z-]*\/package\.json$/.test(x) ||
+        /node_modules\/@[0-9A-Za-z-]*\/[0-9A-Za-z-]*\/package\.json$/.test(x)
+    );
+}
 
 export default findAllLicenses;
