@@ -51,38 +51,64 @@ export const findFile = (filename: string, dirPath: string) =>
     );
   });
 
+// find the license of a package given the parsed content of its package.json file
 const findLicense = async (item: any, dirPath: string) => {
+  // create a retriever object for use in identifying licenses that are not identifed
+  // in the package.json file using the license field
   const retriever = Retriever(licenseMap, templates);
+
   // first, we check the "license" field which can be a string, an array or an object
-  // if the "license" field does not exist, we check the "licenses" field
   if (typeof item.license === "object") {
+    // if the license field is an array, map it to an array of strings
     if (Array.isArray(item.license)) {
       return {
         licenses: item.license.map((x: { type: any }) => x.type || x),
         licensePath: item.path,
       };
     }
+
+    // if the license field is an object but not an array, return the type property
     return { licenses: item.license.type, licensePath: item.path };
   }
+
+  // if the license field is a string, check if it is in the license map
   if (item.license && item.license !== "SEE LICENSE IN LICENSE") {
     return {
       licenses: licenseMap[item.license] || item.license,
       licensePath: item.path,
     };
   }
+
+  // if the license field is absent, check the "licenses" field
   if (item.licenses && typeof item.licenses === "object") {
+    // if the licenses field is an array, map its contents to an array of strings
     if (Array.isArray(item.licenses)) {
       return {
         licenses: item.licenses.map((x: { type: any }) => x.type || x),
         licensePath: item.path,
       };
     }
+
+    // if the licenses field is an object but not an array, return the type property
     return { licenses: item.licenses.type, licensePath: item.path };
   }
+
+  // options below this point exist to identify licenses that are not found in
+  // the package.json file using the license or licenses field
+
+  // check for license files in the root of the package
+  // the licenseFiles array contains the names of common license file names and
+  // common misspellings of those names
   for (const licenseFile of licenseFiles) {
     try {
+      // find the license file in the root of the package
       const basicPath = item.path.replace(/package\.json$/, licenseFile);
+
+      // find the path of the license file, if it exists
+      // an empty string is returned if the file does not exist
       const licensePath = (await findFile(basicPath, dirPath)) as string;
+
+      // retrieve the license from the license file
       const licenses = retriever.retrieveLicenseFromLicenseFile(licensePath);
       if (licenses) {
         return { licenses, licensePath };
@@ -91,10 +117,20 @@ const findLicense = async (item: any, dirPath: string) => {
       console.error(error);
     }
   }
+
+  // check for readme files in the root of the package
+  // the readmeFiles array contains the names of common readme file names and
+  // common misspellings of those names
   for (const readmeFile of readmeFiles) {
     try {
+      // find the readme file in the root of the package
       const basicPath = item.path.replace(/package\.json$/, readmeFile);
+
+      // find the path of the readme file, if it exists
+      // an empty string is returned if the file does not exist
       const licensePath = (await findFile(basicPath, dirPath)) as string;
+
+      // retrieve the license from the readme file
       const licenses = retriever.retrieveLicenseFromReadme(licensePath);
       if (licenses) {
         return { licenses, licensePath };
@@ -103,16 +139,21 @@ const findLicense = async (item: any, dirPath: string) => {
       console.error(error);
     }
   }
+
+  // if no license is found, return "UNKNOWN"
   return { licenses: "UNKNOWN", licensePath: "UNKNOWN" };
 };
 
+// Find all licenses in a project based on a path to the project
 export const findAllLicenses = (projectPath: string) =>
   new Promise<License[]>((resolve, reject) => {
+    // get the name of the root project from its package.json
     const rootProject = JSON.parse(
       readFileSync(`${projectPath}/package.json`).toString()
     );
-    const rootProjectName = rootProject?.name ?? "UNKNOWN";
+    const rootProjectName = rootProject?.name ?? "UNKNOWN"; // if name is not found, set it to "UNKNOWN"
 
+    // find all package.json files in the node_modules directory
     exec(
       `find ${projectPath}/node_modules -name "package.json"`,
       async (err, stdout, stderr) => {
@@ -122,29 +163,39 @@ export const findAllLicenses = (projectPath: string) =>
         if (stderr) {
           console.error(stderr);
         }
+
+        // get the path of the current directory
         const dirPath = (await findDirPath()) as string;
+
+        // split stdout from the command into lines
         const packages = stdout
           .split("\n")
-          .filter((x) => x)
+          .filter((x) => x) // filter out empty lines
           .filter(
             (x) =>
-              // edit out paths with "test" to eliminate test fixtures
+              // filter out paths with "test" to eliminate test fixtures
               !/.*test.*/.test(x) &&
+              // filter out paths that do not end with node_modules/PACKAGE_NAME/package.json
+              // or node_modules/@SCOPE/PACKAGE_NAME/package.json
               (/node_modules\/[0-9A-Za-z-]*\/package\.json$/.test(x) ||
                 /node_modules\/@[0-9A-Za-z-]*\/[0-9A-Za-z-]*\/package\.json$/.test(
                   x
                 ))
           );
 
+        // get the content of each package.json file and parse it
+        // add it to an array of objects where each object contains the path and parsed
+        // content of a package.json file as an object
         const data = packages
           .map((path) => ({
             path,
             ...JSON.parse(readFileSync(path).toString()),
           }))
-          .filter((item) => item.name);
+          .filter((item) => item.name); // filter out packages without a name
 
+        // get the license data for each package
         let licenseData: License[] = await mapSeries(data, async (item) => ({
-          ...(await findLicense(item, dirPath)),
+          ...(await findLicense(item, dirPath)), // returns the licenses and the path of the license file
           path: item.path,
           name: item.name,
           repository: get(item, "repository.url"),
@@ -154,11 +205,13 @@ export const findAllLicenses = (projectPath: string) =>
           rootProjectName: rootProjectName,
         }));
 
+        // remove duplicates based on common name, version and licenses array
         licenseData = removeDuplicates(licenseData);
 
         // sort by name
         licenseData.sort((a, b) => a.name.localeCompare(b.name));
 
+        // resolve the promise with the license data
         resolve(licenseData);
       }
     );
