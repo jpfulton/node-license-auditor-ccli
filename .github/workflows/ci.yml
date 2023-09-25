@@ -92,6 +92,9 @@ jobs:
       - name: Compile
         run: yarn && yarn build && yarn copy-assets
 
+      - name: Test
+        run: yarn test:ci
+
       - name: Danger
         if: (github.event_name == 'pull_request' && github.event.action != 'closed')
         env:

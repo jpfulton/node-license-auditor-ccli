@@ -1,4 +1,5 @@
 import { danger, warn } from "danger";
+import jest from "danger-plugin-jest";
 
 // No PR is too small to include a description of why you made a change
 if (danger.github.pr.body.length < 10) {
@@ -15,3 +16,6 @@ if (hasAppChanges && !hasTestChanges) {
     "This PR does not include changes to tests, even though it affects app code."
   );
 }
+
+// Run Jest plugin
+jest();
