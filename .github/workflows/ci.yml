@@ -141,6 +141,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+          cache: yarn
 
       - name: Update Yarn Version
         run: corepack enable && yarn set version stable
