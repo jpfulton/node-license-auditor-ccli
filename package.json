@@ -33,6 +33,7 @@
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "babel-plugin-transform-import-meta": "^2.2.1",
+    "danger": "^11.3.0",
     "eslint": "^8.48.0",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
@@ -50,7 +51,7 @@
     "build-debug": "tsc --project tsconfig.debug.json",
     "clean": "rm -rf dist",
     "copy-assets": "cp -R ./src/auditor/templates/ ./dist/auditor/templates/",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
     "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/index.js",
     "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/index.js",
     "test": "jest --env=node --colors --coverage test"
