@@ -116,7 +116,7 @@ describe("findLicense", () => {
 
   it("should return the license of a package from a license file in the root of the package", async () => {
     const item = {
-      path: "test",
+      path: "package.json",
     };
 
     const result = await findLicense(

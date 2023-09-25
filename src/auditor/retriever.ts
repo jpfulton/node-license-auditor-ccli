@@ -12,7 +12,10 @@ const Retriever = (
     const lines = content.split("\n");
 
     // find the first line that contains the word "license" (case insensitive)
-    const license = lines.find((line) => /license/i.test(line));
+    let license = lines.find((line) => /license/i.test(line));
+
+    // remove the # from the license if it exists (markdown support)
+    license = license?.replace("#", "").trim();
 
     // search for the license in the license map
     const mapped = licenseMap[(license || "").trim()];
