@@ -31,6 +31,14 @@ describe("findFile", () => {
     );
     expect(result).toBe("");
   });
+
+  it("should return the path of a readme file given a filename and a directory path", async () => {
+    const result = await findFile(
+      "README",
+      `${process.cwd()}/tests/auditor/package-with-only-readme-file`
+    );
+    expect(result).toBe("README");
+  });
 });
 
 // findLicense should return the license of a package given the parsed content of its package.json file

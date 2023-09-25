@@ -52,6 +52,8 @@ const Retriever = (
   function retrieveLicenseFromReadme(filename: string): string {
     // if the file does not exist, return an empty string
     if (!existsSync(filename)) {
+      console.log(`Current working directory: ${process.cwd()}`);
+      console.log("File does not exist: %s", filename);
       return "";
     }
 
