@@ -20,4 +20,4 @@ if (hasAppChanges && !hasTestChanges) {
 
 // Run plugins
 jest();
-eslint(".eslintrc.json", [".ts", ".tsx"]);
+eslint({ extensions: [".ts", ".tsx"] });
