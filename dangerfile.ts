@@ -1,6 +1,7 @@
 import eslint from "@seadub/danger-plugin-eslint";
 import { danger, warn } from "danger";
 import jest from "danger-plugin-jest";
+import fs from "fs";
 
 // No PR is too small to include a description of why you made a change
 if (danger.github.pr.body.length < 10) {
@@ -18,6 +19,9 @@ if (hasAppChanges && !hasTestChanges) {
   );
 }
 
-// Run plugins
+// Run Jest Plugin
 jest();
-eslint(null, [".ts", ".tsx"]);
+
+// Run ESLint Plugin
+const eslintConfig = fs.readFileSync(".eslintrc.json", "utf8").toString();
+eslint(eslintConfig, [".ts", ".tsx"]);
