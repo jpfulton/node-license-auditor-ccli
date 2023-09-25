@@ -71,7 +71,7 @@ jobs:
           category: "/language:${{matrix.language}}"
 
   compile:
-    name: Compile
+    name: Compile, Test and Lint
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
