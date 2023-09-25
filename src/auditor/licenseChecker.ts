@@ -6,7 +6,7 @@ import { readFileSync } from "fs";
 import bluebird from "bluebird";
 import lodash from "lodash";
 const { mapSeries } = bluebird;
-const { get } = lodash;
+const { get } = lodash; // used to access properties of an object given a path
 
 import Retriever from "./retriever.js";
 
@@ -14,8 +14,11 @@ import { License } from "../models/license.js";
 import constants from "../util/constants.js";
 const { templates, licenseMap, licenseFiles, readmeFiles } = constants;
 
-const findDirPath = () =>
+// find the path of the current directory
+export const findDirPath = () =>
   new Promise((resolve, reject) => {
+    // pwd is a unix command to print the current working directory
+    // run in child process to get the path of the current directory
     exec("pwd", async (err, stdout, stderr) => {
       if (err) {
         reject(err);
@@ -23,12 +26,16 @@ const findDirPath = () =>
       if (stderr) {
         console.error(stderr);
       }
-      resolve(stdout.replace(/\n/, ""));
+      resolve(stdout.replace(/\n/, "")); // remove trailing newline
     });
   });
 
-const findFile = (filename: string, dirPath: string) =>
+// find the path of a file given a filename and a directory path
+export const findFile = (filename: string, dirPath: string) =>
   new Promise((resolve, reject) => {
+    // find is a unix command to find files in a directory
+    // -iwholename is used to match the whole path
+    // may return multiple results
     exec(
       `find ${dirPath} -iwholename ${dirPath}/${filename}`,
       async (err, stdout, stderr) => {
@@ -38,6 +45,7 @@ const findFile = (filename: string, dirPath: string) =>
         if (stderr) {
           console.error(stderr);
         }
+        // remove trailing newline
         resolve(stdout.replace(`${dirPath}/`, "").replace(/\n/gm, ""));
       }
     );
@@ -209,3 +217,5 @@ export const removeDuplicates = (licenseData: License[]): License[] => {
 
   return result;
 };
+
+export default findAllLicenses;

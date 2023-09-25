@@ -1,5 +1,36 @@
-import { removeDuplicates } from "../../src/auditor/licenseChecker";
+import {
+  findDirPath,
+  findFile,
+  removeDuplicates,
+} from "../../src/auditor/licenseChecker";
 import { License } from "../../src/models/license";
+
+// findDirPath should return the path of the current working directory
+describe("findDirPath", () => {
+  it("should return the path of the current working directory", async () => {
+    const result = await findDirPath();
+    expect(result).toBe(process.cwd());
+  });
+});
+
+// findFile should return the path of a file given a filename and a directory path
+describe("findFile", () => {
+  it("should return the path of a file given a filename and a directory path", async () => {
+    const result = await findFile(
+      "LICENSE-test.txt",
+      `${process.cwd()}/tests/auditor`
+    );
+    expect(result).toBe("LICENSE-test.txt");
+  });
+
+  it("should return an empty string if the file does not exist", async () => {
+    const result = await findFile(
+      "LICENSE-test-2.txt",
+      `${process.cwd()}/tests/auditor`
+    );
+    expect(result).toBe("");
+  });
+});
 
 // removeDuplicates should remove duplicate licenses based on common name,
 // version and licenses array
