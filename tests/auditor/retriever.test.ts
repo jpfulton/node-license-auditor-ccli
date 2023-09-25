@@ -31,3 +31,14 @@ describe("retrieveLicenseFromLicenseFileContent", () => {
     expect(result).toBe("MIT");
   });
 });
+
+// retrieveLicenseFromReadme should return the license from the content of a readme file
+describe("retrieveLicenseFromReadme", () => {
+  it("should return the license from the content of a readme file", () => {
+    const result = Retriever(licenseMap, templates).retrieveLicenseFromReadme(
+      `${process.cwd()}/tests/auditor/package-with-only-readme-file/README`
+    );
+
+    expect(result).toBe("MIT");
+  });
+});

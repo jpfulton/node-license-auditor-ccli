@@ -126,6 +126,19 @@ describe("findLicense", () => {
 
     expect(result.licenses).toBe("MIT");
   });
+
+  it("should return the license of a package from a readme file in the root of the package", async () => {
+    const item = {
+      path: "package.json",
+    };
+
+    const result = await findLicense(
+      item,
+      `${process.cwd()}/tests/auditor/package-with-only-readme-file`
+    );
+
+    expect(result.licenses).toBe("MIT");
+  });
 });
 
 // removeDuplicates should remove duplicate licenses based on common name,
