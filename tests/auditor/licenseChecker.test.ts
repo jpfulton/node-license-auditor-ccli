@@ -1,6 +1,7 @@
 import {
   findDirPath,
   findFile,
+  findLicense,
   removeDuplicates,
 } from "../../src/auditor/licenseChecker";
 import { License } from "../../src/models/license";
@@ -29,6 +30,101 @@ describe("findFile", () => {
       `${process.cwd()}/tests/auditor`
     );
     expect(result).toBe("");
+  });
+});
+
+// findLicense should return the license of a package given the parsed content of its package.json file
+// or the contents of either a license file or a readme file if license data cannot be
+// found in the package.json file
+describe("findLicense", () => {
+  it("should return the license of a package from package.json using the license field as a string", async () => {
+    const item = {
+      license: "MIT",
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toBe("MIT");
+  });
+
+  it("should return the license of a package from package.json using the license field as an array", async () => {
+    const item = {
+      license: ["MIT"],
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toStrictEqual(["MIT"]);
+  });
+
+  it("should return the license of a package from package.json using the licenses field as an array with multiple values", async () => {
+    const item = {
+      licenses: ["MIT", "Apache-2.0"],
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toStrictEqual(["MIT", "Apache-2.0"]);
+  });
+
+  it("should return the license of a package from package.json using the license field as an object", async () => {
+    const item = {
+      license: { type: "MIT" },
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toBe("MIT");
+  });
+
+  it("should return the license of a package from package.json using the licenses field as an object", async () => {
+    const item = {
+      licenses: { type: "MIT" },
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toBe("MIT");
+  });
+
+  it("should return the license of a package from package.json using the licenses field as an array with a single value", async () => {
+    const item = {
+      licenses: [{ type: "MIT" }],
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toStrictEqual(["MIT"]);
+  });
+
+  it("should return the license of a package from package.json using the licenses field as an array with multiple values", async () => {
+    const item = {
+      licenses: [{ type: "MIT" }, { type: "Apache-2.0" }],
+      path: "test",
+    };
+
+    const result = await findLicense(item, `${process.cwd()}/tests/auditor`);
+
+    expect(result.licenses).toStrictEqual(["MIT", "Apache-2.0"]);
+  });
+
+  it("should return the license of a package from a license file in the root of the package", async () => {
+    const item = {
+      path: "test",
+    };
+
+    const result = await findLicense(
+      item,
+      `${process.cwd()}/tests/auditor/package-with-only-license-file`
+    );
+
+    expect(result.licenses).toBe("MIT");
   });
 });
 

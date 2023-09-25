@@ -1,4 +1,5 @@
 {
+  "version": "0.2.0",
   "configurations": [
     {
       "name": "Attach",
@@ -6,6 +7,18 @@
       "request": "attach",
       "skipFiles": ["<node_internals>/**"],
       "type": "node"
+    },
+    {
+      "name": "Debug Jest Tests",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--inspect-brk",
+        "${workspaceRoot}/node_modules/.bin/jest",
+        "--runInBand"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen"
     }
   ]
 }

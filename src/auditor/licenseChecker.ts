@@ -52,7 +52,7 @@ export const findFile = (filename: string, dirPath: string) =>
   });
 
 // find the license of a package given the parsed content of its package.json file
-const findLicense = async (item: any, dirPath: string) => {
+export const findLicense = async (item: any, dirPath: string) => {
   // create a retriever object for use in identifying licenses that are not identifed
   // in the package.json file using the license field
   const retriever = Retriever(licenseMap, templates);

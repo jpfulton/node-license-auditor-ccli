@@ -13,6 +13,7 @@ const templates: Record<string, string> = {
 };
 
 const licenseMap: Record<string, string> = {
+  "# MIT License": "MIT",
   "(The MIT License)": "MIT",
   "Apache License": "Apache",
   "ISC License": "MIT",

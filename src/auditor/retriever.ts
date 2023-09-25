@@ -11,7 +11,7 @@ const Retriever = (
     // split the content into lines
     const lines = content.split("\n");
 
-    // find the first line that contains the word "license"
+    // find the first line that contains the word "license" (case insensitive)
     const license = lines.find((line) => /license/i.test(line));
 
     // search for the license in the license map
