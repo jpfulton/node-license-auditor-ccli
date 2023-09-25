@@ -34,7 +34,7 @@ export const findDirPath = () =>
 export const findFile = (filename: string, dirPath: string) =>
   new Promise((resolve, reject) => {
     // find is a unix command to find files in a directory
-    // -iwholename is used to match the whole path
+    // -iwholename is used to match the whole path with case insensitivity
     // may return multiple results
     exec(
       `find ${dirPath} -iwholename ${dirPath}/${filename}`,
