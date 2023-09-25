@@ -21,7 +21,7 @@ describe("findFile", () => {
       "LICENSE-test.txt",
       `${process.cwd()}/tests/auditor`
     );
-    expect(result).toBe("LICENSE-test.txt");
+    expect(result).toBe(`${process.cwd()}/tests/auditor/LICENSE-test.txt`);
   });
 
   it("should return an empty string if the file does not exist", async () => {
@@ -37,7 +37,9 @@ describe("findFile", () => {
       "README",
       `${process.cwd()}/tests/auditor/package-with-only-readme-file`
     );
-    expect(result).toBe("README");
+    expect(result).toBe(
+      `${process.cwd()}/tests/auditor/package-with-only-readme-file/README`
+    );
   });
 });
 

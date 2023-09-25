@@ -46,7 +46,7 @@ export const findFile = (filename: string, dirPath: string) =>
           console.error(stderr);
         }
         // remove trailing newline
-        resolve(stdout.replace(`${dirPath}/`, "").replace(/\n/gm, ""));
+        resolve(stdout.replace(/\n/gm, ""));
       }
     );
   });
