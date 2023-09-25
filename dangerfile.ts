@@ -1,3 +1,4 @@
+import eslint from "@seadub/danger-plugin-eslint";
 import { danger, warn } from "danger";
 import jest from "danger-plugin-jest";
 
@@ -17,5 +18,6 @@ if (hasAppChanges && !hasTestChanges) {
   );
 }
 
-// Run Jest plugin
+// Run plugins
 jest();
+eslint({ config: ".eslintrc.json", extensions: [".ts", ".tsx"] });
