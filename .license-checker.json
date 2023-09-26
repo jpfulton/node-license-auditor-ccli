@@ -58,6 +58,7 @@
     "Apache-1.0",
     "Apache-1.1",
     "Apache-2.0",
+    "BSD",
     "BSD-1-Clause",
     "BSD-2-Clause-FreeBSD",
     "BSD-2-Clause-NetBSD",
@@ -72,6 +73,7 @@
     "BSD-3-Clause-Open-MPI",
     "BSD-3-Clause",
     "BSD-4-Clause-UC",
-    "BSD-4-Clause"
+    "BSD-4-Clause",
+    "ISC"
   ]
 }
