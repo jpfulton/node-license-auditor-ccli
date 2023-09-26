@@ -7,8 +7,7 @@ declare let licenseAuditor:
   | ((config: Partial<IPluginConfig>) => Promise<void>)
   | undefined;
 
-// licenseAuditor is a function that takes a config object and returns a promise
-describe("licenseAuditor", () => {
+describe("licenseAuditor DangerJS plugin module", () => {
   beforeEach(() => {
     // mock the danger functions warn, fail, and markdown and attach them to the global object
     global.warn = jest.fn();
@@ -197,8 +196,14 @@ describe("licenseAuditor", () => {
       global.fail = undefined;
       global.markdown = undefined;
 
+      // reset the mock for parseLicenseFactory
+      jest.unmock("../../src/auditor/parseLicenses");
+
       // reset the licenseAuditor function
       licenseAuditor = undefined;
+
+      // reset modules
+      jest.resetModules();
     });
 
     it("should call fail if there is an error in parseLicenses", async () => {
@@ -241,8 +246,14 @@ describe("licenseAuditor", () => {
       global.fail = undefined;
       global.markdown = undefined;
 
+      // reset the mock for parseLicenseFactory
+      jest.unmock("../../src/auditor/parseLicenses");
+
       // reset the licenseAuditor function
       licenseAuditor = undefined;
+
+      // reset modules
+      jest.resetModules();
     });
 
     it("should call warn if there are no licenses", async () => {
