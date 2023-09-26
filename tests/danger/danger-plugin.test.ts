@@ -172,7 +172,9 @@ describe("licenseAuditor", () => {
       projectPath: process.cwd(),
       showMarkdownSummary: true,
     };
-    const message = `| 3 | 1 | 1 | 1 |`; // values from mocked parseLicenseFactory result
+    const message = `| :hash: Unique Licenses | :green_circle: Whitelisted Licenses | :yellow_circle: Warned Licenses | :red_circle: Blacklisted Licenses |
+|---|---|---|---|
+| 3 | 1 | 1 | 1 |`; // values from mocked parseLicenseFactory result
 
     // act
     await licenseAuditor!(config);

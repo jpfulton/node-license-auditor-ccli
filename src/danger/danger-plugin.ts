@@ -85,13 +85,11 @@ const metadataOutputter = (
   warnCount: number,
   blacklistedCount: number
 ) => {
-  markdown(
-    `| :hash: Unique Licenses | :green_circle: Whitelisted Licenses | :yellow_circle: Warned Licenses | :red_circle: Blacklisted Licenses |`
-  );
-  markdown(`|---|---|---|---|`);
-  markdown(
-    `| ${uniqueCount} | ${whitelistedCount} | ${warnCount} | ${blacklistedCount} |`
-  );
+  const message = `| :hash: Unique Licenses | :green_circle: Whitelisted Licenses | :yellow_circle: Warned Licenses | :red_circle: Blacklisted Licenses |
+|---|---|---|---|
+| ${uniqueCount} | ${whitelistedCount} | ${warnCount} | ${blacklistedCount} |`;
+
+  markdown(message);
 };
 
 export default licenseAuditor;
