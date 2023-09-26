@@ -71,8 +71,11 @@ jobs:
           category: "/language:${{matrix.language}}"
 
   compile:
-    name: Compile
+    name: Compile, Test and Lint
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      statuses: write
 
     steps:
       - name: Checkout repo
@@ -82,12 +85,22 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+          cache: yarn
 
       - name: Update Yarn Version
         run: corepack enable && yarn set version stable
 
       - name: Compile
         run: yarn && yarn build && yarn copy-assets
+
+      - name: Test
+        run: yarn test:ci
+
+      - name: Danger
+        if: (github.event_name == 'pull_request' && github.event.action != 'closed')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn danger ci
 
   tag-release-and-publish:
     name: "Tag, Release and Publish"
@@ -128,6 +141,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+          cache: yarn
 
       - name: Update Yarn Version
         run: corepack enable && yarn set version stable

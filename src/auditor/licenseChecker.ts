@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-empty */
-import { exec } from "child_process";
+import { exec, execFile } from "child_process";
 import { readFileSync } from "fs";
 
 import bluebird from "bluebird";
@@ -36,19 +36,19 @@ export const findFile = (filename: string, dirPath: string) =>
     // find is a unix command to find files in a directory
     // -iwholename is used to match the whole path with case insensitivity
     // may return multiple results
-    exec(
-      `find ${dirPath} -iwholename ${dirPath}/${filename}`,
-      async (err, stdout, stderr) => {
-        if (err) {
-          reject(err);
-        }
-        if (stderr) {
-          console.error(stderr);
-        }
-        // remove trailing newline
-        resolve(stdout.replace(/\n/gm, ""));
+    const cmd = "find";
+    const args = [dirPath, "-iwholename", `${dirPath}/${filename}`];
+
+    execFile(cmd, args, async (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
       }
-    );
+      if (stderr) {
+        console.error(stderr);
+      }
+      // remove trailing newline
+      resolve(stdout.replace(/\n/gm, ""));
+    });
   });
 
 // find the license of a package given the parsed content of its package.json file
