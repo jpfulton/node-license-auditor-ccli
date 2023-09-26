@@ -4,7 +4,7 @@ import jest from "danger-plugin-jest";
 import yarn from "danger-plugin-yarn";
 import fs from "fs";
 
-import licenseAuditor from "./src/danger/danger-plugin";
+import licenseAuditor from "./dist/danger/danger-plugin.js";
 
 export default async () => {
   if (!danger.github) {
