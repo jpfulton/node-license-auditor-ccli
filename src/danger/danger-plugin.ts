@@ -121,7 +121,7 @@ const markdownOutputter = (icon: string, license: License) => {
 
 export const detailsOutputter = (outputs: string[]) => {
   markdown(`### License Details`);
-  markdown(`| Status | Name | Version | License |
+  markdown(`| Status | Package Name | Version | License |
 |---|---|---|---|
 ${outputs.join("\n")}`);
 };

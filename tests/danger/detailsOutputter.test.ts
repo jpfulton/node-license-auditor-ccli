@@ -16,7 +16,7 @@ describe("detailsOutputter", () => {
   it("should call markdown with the correct parameters", () => {
     // arrange
     const message = `### License Details`;
-    const tableHeaderMarkdown = `| Status | Name | Version | License |
+    const tableHeaderMarkdown = `| Status | Package Name | Version | License |
 |---|---|---|---|`;
     const outputs = ["test", "test2"];
 
