@@ -46,6 +46,10 @@ tests
 .babelrc
 .eslintrc.json
 .yarnrc.yml
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+dangerfile.ts
 jest.config.ts
+SECURITY.md
 tsconfig.json
 tsconfig.debug.json
