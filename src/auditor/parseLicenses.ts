@@ -33,7 +33,8 @@ const parseLicenses =
 
       if (isWhitelisted) {
         whitelistedCount++;
-        outputs.push(infoOutputter(licenseObj));
+        const result = infoOutputter(licenseObj);
+        if (result !== "") outputs.push(result);
       }
 
       const isBlacklisted = Array.isArray(licenseObj.licenses)
@@ -44,12 +45,14 @@ const parseLicenses =
 
       if (!isWhitelisted && !isBlacklisted) {
         warnCount++;
-        outputs.push(warnOutputter(licenseObj));
+        const result = warnOutputter(licenseObj);
+        if (result !== "") outputs.push(result);
       }
 
       if (isBlacklisted) {
         blacklistedCount++;
-        outputs.push(errorOutputter(licenseObj));
+        const result = errorOutputter(licenseObj);
+        if (result !== "") outputs.push(result);
       }
     });
 

@@ -42,5 +42,6 @@ export default async () => {
     failOnBlacklistedLicense: false,
     projectPath: ".",
     showMarkdownSummary: true,
+    showMarkdownDetails: true,
   });
 };
