@@ -4,6 +4,8 @@ import jest from "danger-plugin-jest";
 import yarn from "danger-plugin-yarn";
 import fs from "fs";
 
+import licenseAuditor from "./dist/danger/danger-plugin.js";
+
 export default async () => {
   if (!danger.github) {
     return;
@@ -34,4 +36,11 @@ export default async () => {
 
   // Run Yarn Plugin
   await yarn();
+
+  // Run License Auditor Plugin from local source
+  await licenseAuditor({
+    failOnBlacklistedLicense: false,
+    projectPath: ".",
+    showMarkdownSummary: true,
+  });
 };

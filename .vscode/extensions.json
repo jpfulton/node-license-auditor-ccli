@@ -2,6 +2,7 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "github.vscode-github-actions",
-    "github.vscode-pull-request-github"
+    "github.vscode-pull-request-github",
+    "orta.vscode-jest"
   ]
 }
