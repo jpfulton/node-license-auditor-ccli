@@ -1799,6 +1799,7 @@ __metadata:
     commander: ^11.0.0
     danger: ^11.3.0
     danger-plugin-jest: ^1.3.0
+    danger-plugin-yarn: ^1.6.0
     eslint: ^8.48.0
     jest: ^29.7.0
     lodash: ^4.17.21
@@ -3192,6 +3193,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"danger-plugin-yarn@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "danger-plugin-yarn@npm:1.6.0"
+  dependencies:
+    date-fns: ^1.28.5
+    lodash.flatten: ^4.4.0
+    lodash.includes: ^4.3.0
+    node-fetch: ^2.6.0
+    semver: ^5.4.1
+  checksum: e2d1c24ca8a83c169b0bc5b65d2527d27c3ed7a80b32e2bb7440aa519fc29e2ad04b5881121dba36c2320f508911909a13e5fc44311832541019a90e060593a7
+  languageName: node
+  linkType: hard
+
 "danger@npm:^11.3.0":
   version: 11.3.0
   resolution: "danger@npm:11.3.0"
@@ -3245,6 +3259,13 @@ __metadata:
     danger-reset-status: distribution/commands/danger-reset-status.js
     danger-runner: distribution/commands/danger-runner.js
   checksum: d691edee1f677e48b173ba163314c385968d5967824467d6ee2a5ab3076a543981b85a3bd281c23dbd953d67f11fb1d0d9c07f8af1d29fc2438c3d3e12d9799e
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:^1.28.5":
+  version: 1.30.1
+  resolution: "date-fns@npm:1.30.1"
+  checksum: 86b1f3269cbb1f3ee5ac9959775ea6600436f4ee2b78430cd427b41a0c9fabf740b1a5d401c085f3003539a6f4755c7c56c19fbd70ce11f6f673f6bc8075b710
   languageName: node
   linkType: hard
 
@@ -5095,6 +5116,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.flatten@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.flatten@npm:4.4.0"
+  checksum: 0ac34a393d4b795d4b7421153d27c13ae67e08786c9cbb60ff5b732210d46f833598eee3fb3844bb10070e8488efe390ea53bb567377e0cb47e9e630bf0811cb
+  languageName: node
+  linkType: hard
+
 "lodash.includes@npm:^4.3.0":
   version: 4.3.0
   resolution: "lodash.includes@npm:4.3.0"
@@ -5505,7 +5533,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.6.7":
+"node-fetch@npm:^2.6.0, node-fetch@npm:^2.6.7":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
@@ -6180,6 +6208,15 @@ __metadata:
   version: 2.1.2
   resolution: "safer-buffer@npm:2.1.2"
   checksum: cab8f25ae6f1434abee8d80023d7e72b598cf1327164ddab31003c51215526801e40b66c5e65d658a0af1e9d6478cadcb4c745f4bd6751f97d8644786c0978b0
+  languageName: node
+  linkType: hard
+
+"semver@npm:^5.4.1":
+  version: 5.7.2
+  resolution: "semver@npm:5.7.2"
+  bin:
+    semver: bin/semver
+  checksum: fb4ab5e0dd1c22ce0c937ea390b4a822147a9c53dbd2a9a0132f12fe382902beef4fbf12cf51bb955248d8d15874ce8cd89532569756384f994309825f10b686
   languageName: node
   linkType: hard
 
