@@ -170,15 +170,6 @@ describe("licenseAuditor", () => {
       global.warn = jest.fn();
       global.fail = jest.fn();
       global.markdown = jest.fn();
-
-      jest.doMock("../../src/auditor/parseLicenses", () => {
-        // mock the parseLicenseFactory function to throw an error
-        return jest.fn().mockImplementation(() => {
-          return () => {
-            throw new Error("test error");
-          };
-        });
-      });
     });
 
     afterEach(() => {
@@ -191,8 +182,16 @@ describe("licenseAuditor", () => {
       licenseAuditor = undefined;
     });
 
-    it("should call fail if there is an error", async () => {
+    it("should call fail if there is an error in parseLicenses", async () => {
       // arrange
+      jest.doMock("../../src/auditor/parseLicenses", () => {
+        // mock the parseLicenseFactory function to throw an error
+        return jest.fn().mockImplementation(() => {
+          return () => {
+            throw new Error("test error");
+          };
+        });
+      });
       licenseAuditor = require("../../src/danger/danger-plugin").licenseAuditor;
       const config = {
         failOnBlacklistedLicense: false,
