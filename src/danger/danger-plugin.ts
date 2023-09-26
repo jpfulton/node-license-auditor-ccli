@@ -1,5 +1,3 @@
-//import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-//declare const danger: DangerDSLType;
 declare const fail: (message: string) => void;
 declare const warn: (message: string) => void;
 declare const markdown: (message: string) => void;
