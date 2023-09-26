@@ -92,7 +92,6 @@ const metadataOutputter = (
   markdown(
     `| ${uniqueCount} | ${whitelistedCount} | ${warnCount} | ${blacklistedCount} |`
   );
-  markdown("");
 };
 
 export default licenseAuditor;
