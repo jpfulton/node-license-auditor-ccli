@@ -164,6 +164,23 @@ describe("licenseAuditor", () => {
     expect(global.warn).toBeCalledWith(message);
   });
 
+  it("should call markdown with the correct parameters if showMarkdownSummary is true", async () => {
+    // arrange
+    licenseAuditor = require("../../src/danger/danger-plugin").licenseAuditor;
+    const config = {
+      failOnBlacklistedLicense: false,
+      projectPath: process.cwd(),
+      showMarkdownSummary: true,
+    };
+    const message = `| 3 | 1 | 1 | 1 |`; // values from mocked parseLicenseFactory result
+
+    // act
+    await licenseAuditor!(config);
+
+    // assert
+    expect(global.markdown).toBeCalledWith(message);
+  });
+
   describe("licenseAuditor when there are internal errors", () => {
     beforeEach(() => {
       // mock the danger functions warn, fail, and markdown and attach them to the global object
