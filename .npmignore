@@ -45,6 +45,7 @@ example-configs
 tests
 .babelrc
 .eslintrc.json
+.license-checker.json
 .yarnrc.yml
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
