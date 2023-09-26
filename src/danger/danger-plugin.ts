@@ -88,7 +88,6 @@ export const licenseAuditor = async (
       warn(`Found ${blacklistedCount} blacklisted licenses.`);
     }
   } catch (err) {
-    console.error(err);
     fail(
       `[node-license-auditor] Failed to audit licenses with error: ${
         (err as Error).message
