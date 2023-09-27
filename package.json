@@ -11,7 +11,10 @@
     "audit"
   ],
   "main": "./dist",
-  "repository": "git@github.com:jpfulton/node-license-auditor-cli.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpfulton/node-license-auditor-cli.git"
+  },
   "author": "J. Patrick Fulton <jpatrick.fulton@gmail.com>",
   "license": "MIT",
   "packageManager": "yarn@3.6.3",
@@ -19,7 +22,9 @@
   "engines": {
     "node": ">=18.16.0"
   },
-  "bin": "dist/index.js",
+  "bin": {
+    "license-auditor-cli": "./dist/index.js"
+  },
   "devDependencies": {
     "@babel/core": "^7.22.20",
     "@babel/plugin-transform-runtime": "^7.22.15",
