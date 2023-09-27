@@ -23,7 +23,7 @@
     "node": ">=18.16.0"
   },
   "bin": {
-    "license-auditor-cli": "./dist/index.js"
+    "license-auditor-cli": "./dist/program.js"
   },
   "devDependencies": {
     "@babel/core": "^7.22.20",
