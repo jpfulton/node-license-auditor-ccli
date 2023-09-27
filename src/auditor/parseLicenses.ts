@@ -1,5 +1,5 @@
-import { License } from "../models/license.js";
-import { LicenseOutputter } from "../util/outputters.js";
+import { License } from "../models";
+import { LicenseOutputter } from "../util";
 
 const parseLicenses =
   (

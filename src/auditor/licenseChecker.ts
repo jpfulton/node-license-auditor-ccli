@@ -10,9 +10,8 @@ const { get } = lodash; // used to access properties of an object given a path
 
 import Retriever from "./retriever.js";
 
-import { License } from "../models/license.js";
-import constants from "../util/constants.js";
-const { templates, licenseMap, licenseFiles, readmeFiles } = constants;
+import { License } from "../models";
+import { licenseFiles, licenseMap, readmeFiles, templates } from "../util";
 
 // find the path of the current directory
 export const findDirPath = () =>

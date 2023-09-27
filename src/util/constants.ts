@@ -1,18 +1,16 @@
 import { readFileSync } from "fs";
 
-import path from "path";
-import { fileURLToPath } from "url";
+import filedirname from "filedirname";
+const [, __dirname] = filedirname();
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const templates: Record<string, string> = {
+export const templates: Record<string, string> = {
   [readFileSync(
     `${__dirname}/../auditor/templates/BSD-2-Clause.txt`
   ).toString()]: "BSD 2-Clause",
   [readFileSync(`${__dirname}/../auditor/templates/MIT.txt`).toString()]: "MIT",
 };
 
-const licenseMap: Record<string, string> = {
+export const licenseMap: Record<string, string> = {
   "(The MIT License)": "MIT",
   "Apache License": "Apache",
   "ISC License": "ISC",
@@ -24,7 +22,7 @@ const licenseMap: Record<string, string> = {
   "This software is released under the MIT license:": "MIT",
 };
 
-const licenseFiles = [
+export const licenseFiles = [
   "LICENSE",
   "LICENCE",
   "LICENSE.md",
@@ -34,11 +32,4 @@ const licenseFiles = [
   "LICENSE.BSD",
 ];
 
-const readmeFiles = ["README", "README.md", "README.markdown"];
-
-export default {
-  templates,
-  licenseMap,
-  licenseFiles,
-  readmeFiles,
-};
+export const readmeFiles = ["README", "README.md", "README.markdown"];

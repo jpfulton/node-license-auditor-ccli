@@ -3,5 +3,3 @@ export interface Configuration {
   blackList: string[];
   configurationSource?: "default" | "file";
 }
-
-export default Configuration;
