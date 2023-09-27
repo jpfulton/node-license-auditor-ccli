@@ -1,7 +1,5 @@
 import Retriever from "../../src/auditor/retriever.js";
-import constants from "../../src/util/constants.js";
-
-const { templates, licenseMap } = constants;
+import { licenseMap, templates } from "../../src/util/constants.js";
 
 // retrieveLicenseFromLicenseFile should return the license from the content of a license file
 describe("retrieveLicenseFromLicenseFile", () => {

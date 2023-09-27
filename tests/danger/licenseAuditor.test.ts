@@ -258,13 +258,13 @@ describe("licenseAuditor DangerJS plugin module", () => {
 
     it("should call warn if there are no licenses", async () => {
       // arrange
-      jest.doMock("../../src/auditor/licenseChecker", () => {
+      jest.doMock("../../src/auditor", () => {
         // mock the findAllLicenses function to return an empty array
         return jest.fn().mockImplementation(() => {
           return [];
         });
       });
-      licenseAuditor = require("../../src/danger/danger-plugin").licenseAuditor;
+      licenseAuditor = require("../../src/danger").licenseAuditor;
       const config = {
         failOnBlacklistedLicense: false,
         projectPath: process.cwd(),

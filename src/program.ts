@@ -2,8 +2,7 @@
 
 import chalk from "chalk";
 import { CommanderError, program } from "commander";
-import { auditToCsv } from "./commands/audit-to-csv.js";
-import { auditToMarkdown } from "./commands/audit-to-markdown.js";
+import { auditToCsv, auditToMarkdown } from "./commands";
 
 program.description("A CLI for auditing node package licenses.");
 

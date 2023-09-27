@@ -2,13 +2,13 @@ declare const fail: (message: string) => void;
 declare const warn: (message: string) => void;
 declare const markdown: (message: string) => void;
 
-import findAllLicenses from "../auditor/licenseChecker.js";
-import { noLicenses } from "../auditor/messages.js";
-import parseLicensesFactory from "../auditor/parseLicenses.js";
-import { License } from "../models/license.js";
-import getConfiguration from "../util/configuration.js";
-import { LicenseOutputter } from "../util/outputters";
-import { getCurrentVersionString } from "../util/root-project.js";
+import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
+import { License } from "../models";
+import {
+  LicenseOutputter,
+  getConfiguration,
+  getCurrentVersionString,
+} from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/node-license-auditor-cli";
 const version = getCurrentVersionString();
@@ -38,7 +38,7 @@ export const licenseAuditor = async (
       return warn(noLicenses);
     }
 
-    const parse = parseLicensesFactory(
+    const parse = parseLicenseFactory(
       auditorConfig.whiteList,
       auditorConfig.blackList,
       emptyOutputter,
