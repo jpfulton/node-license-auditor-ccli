@@ -7,5 +7,5 @@
     "source.sortMembers"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["Outputter", "outputters"]
+  "cSpell.words": ["filedirname", "Outputter", "outputters"]
 }
