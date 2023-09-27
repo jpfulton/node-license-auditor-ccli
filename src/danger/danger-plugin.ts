@@ -2,7 +2,7 @@ declare const fail: (message: string) => void;
 declare const warn: (message: string) => void;
 declare const markdown: (message: string) => void;
 
-import findAllLicenses from "../auditor/licenseChecker";
+import findAllLicenses from "../auditor/licenseChecker.js";
 import { noLicenses } from "../auditor/messages.js";
 import parseLicensesFactory from "../auditor/parseLicenses.js";
 import { License } from "../models/license.js";
