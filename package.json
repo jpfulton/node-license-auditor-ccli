@@ -61,7 +61,7 @@
     "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json",
     "build-debug": "tsc --p tsconfig.esm.debug.json && tsc --p tsconfig.cjs.debug.json && tsc --p tsconfig.types.json",
     "clean": "rm -rf dist",
-    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/auditor/templates/",
+    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/ && cp -R ./src/auditor/templates/ ./dist/esm/auditor/templates/",
     "lint": "eslint .",
     "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/index.js",
     "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/index.js",
