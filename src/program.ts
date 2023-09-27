@@ -23,7 +23,7 @@ program
   .action(auditToMarkdown);
 
 try {
-  await program.parseAsync();
+  program.parse();
 } catch (e) {
   // if the error is a derivative of CommanderError
   // respect the suggested exitCode and display the error

@@ -10,7 +10,9 @@
     "license",
     "audit"
   ],
-  "main": "./dist",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/jpfulton/node-license-auditor-cli.git"
@@ -52,11 +54,12 @@
     "bluebird": "^3.7.2",
     "chalk": "^5.3.0",
     "commander": "^11.0.0",
+    "filedirname": "^2.7.0",
     "lodash": "^4.17.21"
   },
   "scripts": {
-    "build": "tsc",
-    "build-debug": "tsc --project tsconfig.debug.json",
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json",
+    "build-debug": "tsc --p tsconfig.esm.debug.json && tsc --p tsconfig.cjs.debug.json && tsc --p tsconfig.types.json",
     "clean": "rm -rf dist",
     "copy-assets": "cp -R ./src/auditor/templates/ ./dist/auditor/templates/",
     "lint": "eslint .",

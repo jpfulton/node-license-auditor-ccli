@@ -1,9 +1,11 @@
 import { readFileSync } from "fs";
 
-import path from "path";
-import { fileURLToPath } from "url";
+// import path from "path";
+// import { fileURLToPath } from "url";
+// const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import filedirname from "filedirname";
+const [__filename, __dirname] = filedirname();
 
 export const templates: Record<string, string> = {
   [readFileSync(
