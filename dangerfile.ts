@@ -1,10 +1,11 @@
+import * as fs from "node:fs";
+
 import eslint from "@seadub/danger-plugin-eslint";
 import { danger, warn } from "danger";
 import jest from "danger-plugin-jest";
 import yarn from "danger-plugin-yarn";
-import fs from "fs";
 
-import licenseAuditor from "./dist/cjs/danger/danger-plugin.js";
+import { licenseAuditor } from "./dist/cjs/danger";
 
 export default async () => {
   if (!danger.github) {
