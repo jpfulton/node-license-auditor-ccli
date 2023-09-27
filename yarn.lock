@@ -1807,7 +1807,7 @@ __metadata:
     ts-node: ^10.9.1
     typescript: ^5.2.2
   bin:
-    node-license-auditor-cli: dist/index.js
+    license-auditor-cli: ./dist/index.js
   languageName: unknown
   linkType: soft
 
