@@ -24,11 +24,11 @@
   "engines": {
     "node": ">=18.16.0"
   },
-  "bin": {
-    "license-auditor-cli": "./dist/program.js"
-  },
+  "bin": "./dist/esm/program.js",
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
     "@babel/core": "^7.22.20",
+    "@babel/node": "^7.22.19",
     "@babel/plugin-transform-runtime": "^7.22.15",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
@@ -58,13 +58,18 @@
     "lodash": "^4.17.21"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json",
-    "build-debug": "tsc --p tsconfig.esm.debug.json && tsc --p tsconfig.cjs.debug.json && tsc --p tsconfig.types.json",
+    "build": "yarn build:cjs && yarn build:esm && yarn build:types && yarn copy-assets",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json --noEmit && babel src --out-dir dist/esm --extensions \".ts,.tsx\" --ignore \"src/auditor/templates/*\" --copy-files --no-copy-ignored --config-file ./.babelrc",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build-debug": "yarn build:debug:cjs && yarn build:debug:esm && yarn build:types && yarn copy-assets",
+    "build:debug:cjs": "tsc --p tsconfig.cjs.debug.json",
+    "build:debug:esm": "tsc --p tsconfig.esm.debug.json",
     "clean": "rm -rf dist",
     "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/ && cp -R ./src/auditor/templates/ ./dist/esm/auditor/templates/",
     "lint": "eslint .",
-    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/index.js",
-    "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/index.js",
+    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/esm/program.js",
+    "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/esm/program.js",
     "test": "jest --env=node --colors --coverage test",
     "test:ci": "jest --env=node --coverage --ci --json --outputFile=test-results.json test"
   }
