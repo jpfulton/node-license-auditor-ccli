@@ -20,11 +20,10 @@
   "author": "J. Patrick Fulton <jpatrick.fulton@gmail.com>",
   "license": "MIT",
   "packageManager": "yarn@3.6.3",
-  "type": "module",
   "engines": {
     "node": ">=18.16.0"
   },
-  "bin": "./dist/esm/program.js",
+  "bin": "./dist/cjs/program.js",
   "devDependencies": {
     "@babel/cli": "^7.23.0",
     "@babel/core": "^7.22.20",
@@ -52,7 +51,6 @@
   },
   "dependencies": {
     "bluebird": "^3.7.2",
-    "chalk": "^5.3.0",
     "commander": "^11.0.0",
     "filedirname": "^2.7.0",
     "lodash": "^4.17.21"
@@ -68,7 +66,7 @@
     "clean": "rm -rf dist",
     "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/ && cp -R ./src/auditor/templates/ ./dist/esm/auditor/templates/",
     "lint": "eslint .",
-    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/esm/program.js",
+    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/cjs/program.js",
     "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/esm/program.js",
     "test": "jest --env=node --colors --coverage test",
     "test:ci": "jest --env=node --coverage --ci --json --outputFile=test-results.json test"
