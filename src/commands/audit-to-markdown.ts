@@ -28,6 +28,11 @@ export async function auditToMarkdown(
   console.log(
     `> Configuration source used: ${configuration.configurationSource}`
   );
+  if (configuration.configurationSource !== "default") {
+    console.log(
+      `> Configuration source URL: ${configuration.configurationFileName}`
+    );
+  }
   console.log("");
 
   await checkLicenses(
