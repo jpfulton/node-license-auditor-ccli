@@ -1,1 +1,2 @@
-export type { IPluginConfig, licenseAuditor } from "./danger";
+export { licenseAuditor } from "./danger";
+export type { IPluginConfig } from "./danger";
