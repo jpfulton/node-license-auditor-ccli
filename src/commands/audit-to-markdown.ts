@@ -30,7 +30,7 @@ export async function auditToMarkdown(
   );
   console.log("");
 
-  checkLicenses(
+  await checkLicenses(
     configuration.whiteList,
     configuration.blackList,
     pathToProject,
@@ -38,7 +38,9 @@ export async function auditToMarkdown(
     infoMarkdown,
     warnMarkdown,
     errorMarkdown
-  ).then(() => console.log(""));
+  );
+
+  console.log("");
 }
 
 const metadataMarkdown = (
