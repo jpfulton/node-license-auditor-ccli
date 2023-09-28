@@ -7,12 +7,16 @@ describe("auditToMarkdown", () => {
   });
 
   it("should succeed if the URL does exist", async () => {
+    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
+
     await expect(
       auditToMarkdown(".", {
         remote:
           "https://raw.githubusercontent.com/jpfulton/jpfulton-license-audits/main/.license-checker.json",
       })
     ).resolves.not.toThrow();
+
+    expect(consoleSpy).toHaveBeenCalled();
   });
 
   it("should throw an error if the URL does not exist", async () => {
