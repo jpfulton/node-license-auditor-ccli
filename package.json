@@ -11,7 +11,6 @@
     "audit"
   ],
   "main": "./dist/cjs/index.js",
-  "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
   "repository": {
     "type": "git",
@@ -20,15 +19,14 @@
   "author": "J. Patrick Fulton <jpatrick.fulton@gmail.com>",
   "license": "MIT",
   "packageManager": "yarn@3.6.3",
-  "type": "module",
   "engines": {
     "node": ">=18.16.0"
   },
-  "bin": {
-    "license-auditor-cli": "./dist/program.js"
-  },
+  "bin": "./dist/cjs/program.js",
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
     "@babel/core": "^7.22.20",
+    "@babel/node": "^7.22.19",
     "@babel/plugin-transform-runtime": "^7.22.15",
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
@@ -40,7 +38,6 @@
     "@types/node": "^20.5.7",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
-    "babel-plugin-transform-import-meta": "^2.2.1",
     "danger": "^11.3.0",
     "danger-plugin-jest": "^1.3.0",
     "danger-plugin-yarn": "^1.6.0",
@@ -52,19 +49,21 @@
   },
   "dependencies": {
     "bluebird": "^3.7.2",
-    "chalk": "^5.3.0",
     "commander": "^11.0.0",
     "filedirname": "^2.7.0",
     "lodash": "^4.17.21"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && tsc -p tsconfig.types.json",
-    "build-debug": "tsc --p tsconfig.esm.debug.json && tsc --p tsconfig.cjs.debug.json && tsc --p tsconfig.types.json",
+    "build": "yarn build:cjs && yarn build:types && yarn copy-assets",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build-debug": "yarn build:debug:cjs && yarn build:types && yarn copy-assets",
+    "build:debug:cjs": "tsc --p tsconfig.cjs.debug.json",
     "clean": "rm -rf dist",
-    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/ && cp -R ./src/auditor/templates/ ./dist/esm/auditor/templates/",
+    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/",
     "lint": "eslint .",
-    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/index.js",
-    "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/index.js",
+    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/cjs/program.js",
+    "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/cjs/program.js",
     "test": "jest --env=node --colors --coverage test",
     "test:ci": "jest --env=node --coverage --ci --json --outputFile=test-results.json test"
   }

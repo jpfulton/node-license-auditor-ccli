@@ -1,3 +1,4 @@
 import { IPluginConfig, licenseAuditor } from "./danger-plugin.js";
 
-export { IPluginConfig, licenseAuditor };
+export { licenseAuditor };
+export type { IPluginConfig };

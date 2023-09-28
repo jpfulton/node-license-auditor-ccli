@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import chalk from "chalk";
 import { CommanderError, program } from "commander";
 import { auditToCsv, auditToMarkdown } from "./commands";
 
@@ -33,7 +32,7 @@ try {
 
     // suppress the "(output help)" message to console, output others
     if (commanderError.code !== "commander.help") {
-      console.log(chalk.red.bold(commanderError.message));
+      console.log(commanderError.message);
     }
 
     // exit with the suggested exit code
@@ -43,15 +42,15 @@ try {
 
     // this is a hard (unexpected) error
     // output message and stack trace, exiting with error code
-    console.error(chalk.red.bold(`Message: ${error.message}`));
+    console.error(`Message: ${error.message}`);
 
     if (error.cause) {
-      console.error(chalk.bold.red(`Cause: ${error.cause}`));
+      console.error(`Cause: ${error.cause}`);
     }
 
     if (error.stack) {
-      console.error(chalk.red.bold("Stacktrace:"));
-      console.error(chalk.red((error as Error).stack));
+      console.error("Stacktrace:");
+      console.error((error as Error).stack);
     }
 
     process.exit(1);
