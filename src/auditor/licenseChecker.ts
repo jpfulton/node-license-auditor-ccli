@@ -153,54 +153,53 @@ export const findAllLicenses = (projectPath: string) =>
     const rootProjectName = rootProject?.name ?? "UNKNOWN"; // if name is not found, set it to "UNKNOWN"
 
     // find all package.json files in the node_modules directory
-    exec(
-      `find ${projectPath}/node_modules -name "package.json"`,
-      async (err, stdout, stderr) => {
-        if (err) {
-          reject(err);
-        }
-        if (stderr) {
-          console.error(stderr);
-        }
-
-        // get the path of the current directory
-        const dirPath = (await findDirPath()) as string;
-
-        // split stdout from the command into lines
-        const packages = splitAndFilterPackages(stdout);
-
-        // get the content of each package.json file and parse it
-        // add it to an array of objects where each object contains the path and parsed
-        // content of a package.json file as an object
-        const data = packages
-          .map((path) => ({
-            path,
-            ...JSON.parse(readFileSync(path).toString()),
-          }))
-          .filter((item) => item.name); // filter out packages without a name
-
-        // get the license data for each package
-        let licenseData: License[] = await mapSeries(data, async (item) => ({
-          ...(await findLicense(item, dirPath)), // returns the licenses and the path of the license file
-          path: item.path,
-          name: item.name,
-          repository: get(item, "repository.url"),
-          publisher: get(item, "author.name", item.author),
-          email: get(item, "author.email"),
-          version: item.version,
-          rootProjectName: rootProjectName,
-        }));
-
-        // remove duplicates based on common name, version and licenses array
-        licenseData = removeDuplicates(licenseData);
-
-        // sort by name
-        licenseData.sort((a, b) => a.name.localeCompare(b.name));
-
-        // resolve the promise with the license data
-        resolve(licenseData);
+    const cmd = "find";
+    const args = [`${projectPath}/node_modules`, "-name", "package.json"];
+    execFile(cmd, args, async (err, stdout, stderr) => {
+      if (err) {
+        reject(err);
       }
-    );
+      if (stderr) {
+        console.error(stderr);
+      }
+
+      // get the path of the current directory
+      const dirPath = (await findDirPath()) as string;
+
+      // split stdout from the command into lines
+      const packages = splitAndFilterPackages(stdout);
+
+      // get the content of each package.json file and parse it
+      // add it to an array of objects where each object contains the path and parsed
+      // content of a package.json file as an object
+      const data = packages
+        .map((path) => ({
+          path,
+          ...JSON.parse(readFileSync(path).toString()),
+        }))
+        .filter((item) => item.name); // filter out packages without a name
+
+      // get the license data for each package
+      let licenseData: License[] = await mapSeries(data, async (item) => ({
+        ...(await findLicense(item, dirPath)), // returns the licenses and the path of the license file
+        path: item.path,
+        name: item.name,
+        repository: get(item, "repository.url"),
+        publisher: get(item, "author.name", item.author),
+        email: get(item, "author.email"),
+        version: item.version,
+        rootProjectName: rootProjectName,
+      }));
+
+      // remove duplicates based on common name, version and licenses array
+      licenseData = removeDuplicates(licenseData);
+
+      // sort by name
+      licenseData.sort((a, b) => a.name.localeCompare(b.name));
+
+      // resolve the promise with the license data
+      resolve(licenseData);
+    });
   });
 
 // remove duplicates based on common name, version and licenses array
