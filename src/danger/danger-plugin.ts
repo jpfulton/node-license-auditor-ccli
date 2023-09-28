@@ -7,6 +7,7 @@ import { License } from "../models";
 import {
   LicenseOutputter,
   getConfiguration,
+  getConfigurationFromUrl,
   getCurrentVersionString,
 } from "../util";
 
@@ -18,6 +19,7 @@ export interface IPluginConfig {
   projectPath: string;
   showMarkdownSummary: boolean;
   showMarkdownDetails: boolean;
+  remoteConfigurationUrl: string;
 }
 
 export const licenseAuditor = async (
@@ -28,10 +30,15 @@ export const licenseAuditor = async (
     projectPath = ".",
     showMarkdownSummary = true,
     showMarkdownDetails = true,
+    remoteConfigurationUrl = "",
   } = config;
 
   try {
-    const auditorConfig = await getConfiguration();
+    const auditorConfig =
+      remoteConfigurationUrl !== ""
+        ? await getConfigurationFromUrl(remoteConfigurationUrl)
+        : await getConfiguration();
+
     const licenses = await findAllLicenses(projectPath);
 
     if (!licenses || licenses.length <= 0) {
