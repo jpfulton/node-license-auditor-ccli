@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 
 import filedirname from "filedirname";
-const [, __dirname] = filedirname();
+const [, dirname] = filedirname();
 
 export function getRootProjectName(pathToProject: string) {
   const rootProject = JSON.parse(
@@ -15,7 +15,7 @@ export function getRootProjectName(pathToProject: string) {
 export function getCurrentVersionString() {
   try {
     const packageJson = JSON.parse(
-      readFileSync(`${__dirname}/../../../package.json`).toString()
+      readFileSync(`${dirname}/../../../package.json`).toString()
     );
     const version = packageJson?.version ?? "UNKNOWN";
     return version;

@@ -1,13 +1,12 @@
 import { readFileSync } from "fs";
 
 import filedirname from "filedirname";
-const [, __dirname] = filedirname();
+const [, dirname] = filedirname();
 
 export const templates: Record<string, string> = {
-  [readFileSync(
-    `${__dirname}/../auditor/templates/BSD-2-Clause.txt`
-  ).toString()]: "BSD 2-Clause",
-  [readFileSync(`${__dirname}/../auditor/templates/MIT.txt`).toString()]: "MIT",
+  [readFileSync(`${dirname}/../auditor/templates/BSD-2-Clause.txt`).toString()]:
+    "BSD 2-Clause",
+  [readFileSync(`${dirname}/../auditor/templates/MIT.txt`).toString()]: "MIT",
 };
 
 export const licenseMap: Record<string, string> = {
