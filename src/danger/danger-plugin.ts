@@ -14,14 +14,39 @@ import {
 const repositoryUrl = "https://github.com/jpfulton/node-license-auditor-cli";
 const version = getCurrentVersionString();
 
+/**
+ * Configuration for the license auditor plugin.
+ */
 export interface IPluginConfig {
+  /** Fail the build on discovery of a blacklisted license */
   failOnBlacklistedLicense: boolean;
+  /** Path to the project to audit */
   projectPath: string;
+  /** Show the markdown summary */
   showMarkdownSummary: boolean;
+  /** Show the markdown details */
   showMarkdownDetails: boolean;
+  /** URL to a remote configuration file */
   remoteConfigurationUrl: string;
 }
 
+/**
+ * DangerJS plugin to audit licenses of dependencies in a project.
+ *
+ * Default configuration:
+ * ```typescript
+ * {
+ *  failOnBlacklistedLicense: false,
+ *  projectPath: ".",
+ *  showMarkdownSummary: true,
+ *  showMarkdownDetails: true,
+ *  remoteConfigurationUrl: "", // empty string means use local configuration
+ * }
+ * ```
+ *
+ * @param config Configuration for the plugin. Uses a Partial<IPluginConfig> to allow for partial configuration.
+ * @returns Promise<void>
+ */
 export const licenseAuditor = async (
   config: Partial<IPluginConfig> = {}
 ): Promise<void> => {
