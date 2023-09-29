@@ -26,7 +26,7 @@ export async function auditToMarkdown(
     `> Generated using version ${version} of node-license-auditor-cli. <br />`
   );
   console.log(
-    `> Configuration source used: ${configuration.configurationSource}`
+    `> Configuration source used: ${configuration.configurationSource} <br />`
   );
   if (configuration.configurationSource !== "default") {
     console.log(
