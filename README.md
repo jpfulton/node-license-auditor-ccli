@@ -31,3 +31,43 @@ Licenses in the blackList array will generate errors in the report. Licenses in 
 whiteList array will generate information lines and licenses types that exist in neither
 array generate warnings for further investigation. When a license for a dependency cannot
 be identified it generates an error.
+
+## Remote Configurations
+
+Remote configurations can be used to override the default configuration. To use a remote
+configuration, specify the URL to the configuration file using the `--remote-config` flag.
+
+```bash
+node-license-auditor-cli csv --remote-config https://raw.githubusercontent.com/jpfulton/node-license-auditor-cli/main/.license-checker.json . > report.csv
+```
+
+```bash
+node-license-auditor-cli markdown --remote-config https://raw.githubusercontent.com/jpfulton/node-license-auditor-cli/main/.license-checker.json . > report.md
+```
+
+## Usage as a DangerJS Plugin
+
+This project can be used as a [DangerJS](https://danger.systems/js/) plugin. To use the
+plugin, install the plugin using the following command:
+
+```bash
+yarn add -D @jpfulton/node-license-auditor-cli
+```
+
+Then, add the following to your `dangerfile.ts`:
+
+```typescript
+import { licenseAuditor } from '@jpfulton/node-license-auditor-cli';
+
+export default async () => {
+  // Run the license auditor plugin
+  await licenseAuditor{
+    failOnBlacklistedLicense: false,
+    projectPath: ".",
+    remoteConfigurationUrl:
+      "https://raw.githubusercontent.com/jpfulton/jpfulton-license-audits/main/.license-checker.json",
+    showMarkdownSummary: true,
+    showMarkdownDetails: true,
+  });
+};
+```
