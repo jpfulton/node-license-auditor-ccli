@@ -7,5 +7,5 @@
     "source.sortMembers"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["filedirname", "Outputter", "outputters"]
+  "cSpell.words": ["dangerfile", "filedirname", "Outputter", "outputters"]
 }
