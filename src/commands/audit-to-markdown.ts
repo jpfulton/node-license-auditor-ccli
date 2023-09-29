@@ -1,15 +1,22 @@
-import licenseAuditor from "../auditor/checkLicenses.js";
-import { License } from "../models/license.js";
-import getConfiguration from "../util/configuration.js";
+import { checkLicenses } from "../auditor";
+import { License } from "../models";
 import {
+  getConfiguration,
+  getConfigurationFromUrl,
   getCurrentVersionString,
   getRootProjectName,
-} from "../util/root-project.js";
+} from "../util";
 
-export async function auditToMarkdown(pathToProject: string): Promise<void> {
+export async function auditToMarkdown(
+  pathToProject: string,
+  options: { remote: string }
+): Promise<void> {
   const rootProjectName = getRootProjectName(pathToProject);
   const version = getCurrentVersionString();
-  const configuration = await getConfiguration();
+
+  const configuration = options.remote
+    ? await getConfigurationFromUrl(options.remote)
+    : await getConfiguration();
 
   console.log(`# Package Dependencies Audit Report: ${rootProjectName}`);
   console.log("");
@@ -21,9 +28,14 @@ export async function auditToMarkdown(pathToProject: string): Promise<void> {
   console.log(
     `> Configuration source used: ${configuration.configurationSource}`
   );
+  if (configuration.configurationSource !== "default") {
+    console.log(
+      `> Configuration source URL: ${configuration.configurationFileName}`
+    );
+  }
   console.log("");
 
-  licenseAuditor(
+  await checkLicenses(
     configuration.whiteList,
     configuration.blackList,
     pathToProject,
@@ -31,7 +43,9 @@ export async function auditToMarkdown(pathToProject: string): Promise<void> {
     infoMarkdown,
     warnMarkdown,
     errorMarkdown
-  ).then(() => console.log(""));
+  );
+
+  console.log("");
 }
 
 const metadataMarkdown = (

@@ -1,12 +1,17 @@
-import licenseAuditor from "../auditor/checkLicenses.js";
-import { License } from "../models/license.js";
-import getConfiguration from "../util/configuration.js";
+import { checkLicenses } from "../auditor";
+import { License } from "../models";
+import {
+  getConfiguration,
+  getConfigurationFromUrl,
+} from "../util/configuration.js";
 
 export async function auditToCsv(
   pathToProject: string,
-  options: { headers: boolean; data: boolean }
+  options: { headers: boolean; data: boolean; remote: string }
 ): Promise<void> {
-  const configuration = await getConfiguration();
+  const configuration = options.remote
+    ? await getConfigurationFromUrl(options.remote)
+    : await getConfiguration();
 
   if (options.headers) {
     console.log(
@@ -15,7 +20,7 @@ export async function auditToCsv(
   }
 
   if (options.data) {
-    licenseAuditor(
+    checkLicenses(
       configuration.whiteList,
       configuration.blackList,
       pathToProject,

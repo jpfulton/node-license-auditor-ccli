@@ -1,4 +1,4 @@
-import getConfiguration from "./configuration.js";
+import { getConfiguration, getConfigurationFromUrl } from "./configuration.js";
 import {
   licenseFiles,
   licenseMap,
@@ -12,6 +12,7 @@ export type { LicenseOutputter, MetadataOutputter };
 
 export {
   getConfiguration,
+  getConfigurationFromUrl,
   getCurrentVersionString,
   getRootProjectName,
   licenseFiles,
