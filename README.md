@@ -51,22 +51,33 @@ This project can be used as a [DangerJS](https://danger.systems/js/) plugin. To 
 plugin, install the plugin using the following command:
 
 ```bash
-yarn add -D @jpfulton/node-license-auditor-cli
+yarn add -D danger @jpfulton/node-license-auditor-cli
 ```
 
 Then, add the following to your `dangerfile.ts`:
 
 ```typescript
-import { licenseAuditor } from '@jpfulton/node-license-auditor-cli';
+import { licenseAuditor } from "@jpfulton/node-license-auditor-cli";
 
 export default async () => {
   // Run the license auditor plugin
-  await licenseAuditor{
+  await licenseAuditor({
+    // optionally choose to fail the build if a blacklisted license is found
     failOnBlacklistedLicense: false,
+    // specify the path to the project's package.json file, useful in a monorepo
+    // defaults to the current working directory
     projectPath: ".",
+    // optionally specify a remote configuration file
+    // useful when applying the same configuration to multiple projects
+    // defaults to usage of a local configuration file found at the root of the project repo
     remoteConfigurationUrl:
       "https://raw.githubusercontent.com/jpfulton/jpfulton-license-audits/main/.license-checker.json",
+    // show a summary of the license audit in the PR comment
+    // includes the number of unique dependencies and counts for each category of license found
     showMarkdownSummary: true,
+    // show details of the license audit in the PR comment
+    // includes a table with the name, version and license of each dependency
+    // that was discovered that was not explicitly whitelisted in the configuration
     showMarkdownDetails: true,
   });
 };
