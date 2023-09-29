@@ -12,14 +12,14 @@ program
   .argument("<pathToProject>", "Path to project to audit.")
   .option("--no-headers", "Do not write headers to CSV.")
   .option("--no-data", "Do not write data to CSV.")
-  .option("-r, --remote <url>", "URL to remote configuration file.")
+  .option("-r, --remote-config <url>", "URL to remote configuration file.")
   .description("Output package license audit to CSV.")
   .action(auditToCsv);
 
 program
   .command("markdown")
   .argument("<pathToProject>", "Path to project to audit.")
-  .option("-r, --remote <url>", "URL to remote configuration file.")
+  .option("-r, --remote-config <url>", "URL to remote configuration file.")
   .description("Output package license audit to markdown.")
   .action(auditToMarkdown);
 
