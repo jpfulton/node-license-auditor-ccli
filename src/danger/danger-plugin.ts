@@ -107,7 +107,7 @@ export const licenseAuditor = async (
       );
 
       if (showMarkdownDetails) {
-        detailsOutputter({ ...blackListOutputs, ...warnOutputs });
+        detailsOutputter([...blackListOutputs, ...warnOutputs]);
       }
     }
 
