@@ -16,13 +16,19 @@ const parseLicenses =
     whitelistedCount: number;
     warnCount: number;
     blacklistedCount: number;
-    outputs: string[];
+    allOutputs: string[];
+    whiteListOutputs: string[];
+    warnOutputs: string[];
+    blackListOutputs: string[];
   } => {
     let whitelistedCount = 0;
     let warnCount = 0;
     let blacklistedCount = 0;
 
-    const outputs: string[] = [];
+    const allOutputs: string[] = [];
+    const whiteListOutputs: string[] = [];
+    const warnOutputs: string[] = [];
+    const blackListOutputs: string[] = [];
 
     licenses.forEach((licenseObj) => {
       const isWhitelisted = Array.isArray(licenseObj.licenses)
@@ -34,7 +40,10 @@ const parseLicenses =
       if (isWhitelisted) {
         whitelistedCount++;
         const result = infoOutputter(licenseObj);
-        if (result !== "") outputs.push(result);
+        if (result !== "") {
+          allOutputs.push(result);
+          whiteListOutputs.push(result);
+        }
       }
 
       const isBlacklisted = Array.isArray(licenseObj.licenses)
@@ -46,13 +55,19 @@ const parseLicenses =
       if (!isWhitelisted && !isBlacklisted) {
         warnCount++;
         const result = warnOutputter(licenseObj);
-        if (result !== "") outputs.push(result);
+        if (result !== "") {
+          allOutputs.push(result);
+          warnOutputs.push(result);
+        }
       }
 
       if (isBlacklisted) {
         blacklistedCount++;
         const result = errorOutputter(licenseObj);
-        if (result !== "") outputs.push(result);
+        if (result !== "") {
+          allOutputs.push(result);
+          blackListOutputs.push(result);
+        }
       }
     });
 
@@ -61,7 +76,10 @@ const parseLicenses =
       whitelistedCount: whitelistedCount,
       warnCount: warnCount,
       blacklistedCount: blacklistedCount,
-      outputs: outputs,
+      allOutputs: allOutputs,
+      whiteListOutputs: whiteListOutputs,
+      warnOutputs: warnOutputs,
+      blackListOutputs: blackListOutputs,
     };
   };
 
