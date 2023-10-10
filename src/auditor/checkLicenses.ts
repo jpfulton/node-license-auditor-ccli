@@ -37,7 +37,9 @@ const checkLicenses = async (
       whitelistedCount,
       warnCount,
       blacklistedCount,
-      outputs,
+      blackListOutputs,
+      warnOutputs,
+      whiteListOutputs,
     } = result;
 
     metadataOutputter(
@@ -47,6 +49,7 @@ const checkLicenses = async (
       blacklistedCount
     );
 
+    const outputs = [...blackListOutputs, ...warnOutputs, ...whiteListOutputs];
     outputs.forEach((output) => console.log(output));
   } catch (err) {
     console.error((err as Error).message);

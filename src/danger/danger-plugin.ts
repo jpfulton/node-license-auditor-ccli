@@ -84,7 +84,8 @@ export const licenseAuditor = async (
       whitelistedCount,
       warnCount,
       blacklistedCount,
-      outputs,
+      warnOutputs,
+      blackListOutputs,
     } = result;
 
     if (showMarkdownSummary) {
@@ -106,7 +107,7 @@ export const licenseAuditor = async (
       );
 
       if (showMarkdownDetails) {
-        detailsOutputter(outputs);
+        detailsOutputter({ ...blackListOutputs, ...warnOutputs });
       }
     }
 
