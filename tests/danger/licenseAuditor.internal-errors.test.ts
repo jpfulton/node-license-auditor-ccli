@@ -47,7 +47,7 @@ describe("licenseAuditor when there are internal errors", () => {
       projectPath: process.cwd(),
       showMarkdownSummary: false,
     };
-    const message = `[node-license-auditor] Failed to audit licenses with error: test error`;
+    const message = `[node-license-auditor-cli] Failed to audit licenses with error: test error`;
 
     // act
     await licenseAuditor!(config);

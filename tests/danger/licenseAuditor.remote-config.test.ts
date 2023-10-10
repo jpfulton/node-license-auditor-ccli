@@ -80,7 +80,7 @@ describe("licenseAuditor DangerJS plugin module with remote configuration", () =
       showMarkdownSummary: false,
       remoteConfigurationUrl: invalidConfigurationUrl,
     };
-    const message = `[node-license-auditor] Failed to audit licenses with error: Unable to load configuration from URL: ${invalidConfigurationUrl} Status: 404 was returned.`;
+    const message = `[node-license-auditor-cli] Failed to audit licenses with error: Unable to load configuration from URL: ${invalidConfigurationUrl} Status: 404 was returned.`;
 
     // act
     await licenseAuditor!(config);
