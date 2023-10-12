@@ -7,9 +7,9 @@ import {
   DependencyOutputter,
   getConfiguration,
   getConfigurationFromUrl,
+  getCurrentVersionString,
 } from "@jpfulton/license-auditor-common";
 import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
-import { getCurrentVersionString } from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/node-license-auditor-cli";
 const version = getCurrentVersionString();

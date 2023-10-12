@@ -2,10 +2,11 @@ import {
   Dependency,
   getConfiguration,
   getConfigurationFromUrl,
+  getCurrentVersionString,
   getLicensesMarkdown,
 } from "@jpfulton/license-auditor-common";
 import { checkLicenses } from "../auditor";
-import { getCurrentVersionString, getRootProjectName } from "../util";
+import { getRootProjectName } from "../util";
 
 export async function auditToMarkdown(
   pathToProject: string,

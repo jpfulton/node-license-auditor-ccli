@@ -4,13 +4,6 @@ import {
   readmeFiles,
   templates,
 } from "./constants.js";
-import { getCurrentVersionString, getRootProjectName } from "./root-project.js";
+import { getRootProjectName } from "./root-project.js";
 
-export {
-  getCurrentVersionString,
-  getRootProjectName,
-  licenseFiles,
-  licenseMap,
-  readmeFiles,
-  templates,
-};
+export { getRootProjectName, licenseFiles, licenseMap, readmeFiles, templates };
