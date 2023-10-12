@@ -6,7 +6,7 @@ describe("auditToMarkdown", () => {
     jest.restoreAllMocks();
   });
 
-  it("should succeed if the URL does exist", async () => {
+  it("should succeed if the URL exists", async () => {
     const consoleSpy = jest.spyOn(console, "log").mockImplementation();
 
     await expect(

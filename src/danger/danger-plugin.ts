@@ -2,14 +2,13 @@ declare const fail: (message: string) => void;
 declare const warn: (message: string) => void;
 declare const markdown: (message: string) => void;
 
-import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
-import { License } from "../models";
 import {
-  LicenseOutputter,
+  Dependency,
   getConfiguration,
   getConfigurationFromUrl,
-  getCurrentVersionString,
-} from "../util";
+} from "@jpfulton/license-auditor-common";
+import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
+import { LicenseOutputter, getCurrentVersionString } from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/node-license-auditor-cli";
 const version = getCurrentVersionString();
@@ -132,19 +131,19 @@ export const licenseAuditor = async (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const emptyOutputter: LicenseOutputter = (_license: License) => {
+const emptyOutputter: LicenseOutputter = (_license: Dependency) => {
   return "";
 };
 
-const warnOutputter: LicenseOutputter = (license: License) => {
+const warnOutputter: LicenseOutputter = (license: Dependency) => {
   return markdownOutputter(":yellow_circle:", license);
 };
 
-const errorOutputter: LicenseOutputter = (license: License) => {
+const errorOutputter: LicenseOutputter = (license: Dependency) => {
   return markdownOutputter(":red_circle:", license);
 };
 
-const markdownOutputter = (icon: string, license: License) => {
+const markdownOutputter = (icon: string, license: Dependency) => {
   const { name, version, licenses } = license;
   const licenseString = Array.isArray(licenses)
     ? licenses.join(", ")

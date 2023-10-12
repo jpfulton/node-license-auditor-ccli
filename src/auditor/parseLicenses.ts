@@ -1,16 +1,18 @@
-import { License } from "../models";
-import { LicenseOutputter } from "../util";
+import {
+  Dependency,
+  DependencyOutputter,
+} from "@jpfulton/license-auditor-common";
 
 const parseLicenses =
   (
     whitelistedLicenses: string[],
     blacklistedLicenses: string[],
-    infoOutputter: LicenseOutputter,
-    warnOutputter: LicenseOutputter,
-    errorOutputter: LicenseOutputter
+    infoOutputter: DependencyOutputter,
+    warnOutputter: DependencyOutputter,
+    errorOutputter: DependencyOutputter
   ) =>
   (
-    licenses: License[]
+    dependencies: Dependency[]
   ): {
     uniqueCount: number;
     whitelistedCount: number;
@@ -30,31 +32,32 @@ const parseLicenses =
     const warnOutputs: string[] = [];
     const blackListOutputs: string[] = [];
 
-    licenses.forEach((licenseObj) => {
-      const isWhitelisted = Array.isArray(licenseObj.licenses)
-        ? licenseObj.licenses.every((license) =>
-            whitelistedLicenses.includes(license)
-          )
-        : whitelistedLicenses.includes(licenseObj.licenses);
+    dependencies.forEach((dependency) => {
+      // test for whitelisted licenses
+      // a white listed license is one whose license property is in the whitelist
+      const isWhitelisted = dependency.licenses.some((depLicense) =>
+        whitelistedLicenses.includes(depLicense.license)
+      );
 
       if (isWhitelisted) {
         whitelistedCount++;
-        const result = infoOutputter(licenseObj);
+        const result = infoOutputter(dependency);
         if (result !== "") {
           allOutputs.push(result);
           whiteListOutputs.push(result);
         }
       }
 
-      const isBlacklisted = Array.isArray(licenseObj.licenses)
-        ? licenseObj.licenses.some((license) =>
-            blacklistedLicenses.includes(license)
-          )
-        : blacklistedLicenses.includes(licenseObj.licenses);
+      // a dependency is blacklisted if it has a license that is in the blacklist
+      // and does not include a license that is in the whitelist
+      const isBlacklisted =
+        dependency.licenses.some((depLicense) =>
+          blacklistedLicenses.includes(depLicense.license)
+        ) && !isWhitelisted;
 
       if (!isWhitelisted && !isBlacklisted) {
         warnCount++;
-        const result = warnOutputter(licenseObj);
+        const result = warnOutputter(dependency);
         if (result !== "") {
           allOutputs.push(result);
           warnOutputs.push(result);
@@ -63,7 +66,7 @@ const parseLicenses =
 
       if (isBlacklisted) {
         blacklistedCount++;
-        const result = errorOutputter(licenseObj);
+        const result = errorOutputter(dependency);
         if (result !== "") {
           allOutputs.push(result);
           blackListOutputs.push(result);
@@ -72,7 +75,7 @@ const parseLicenses =
     });
 
     return {
-      uniqueCount: licenses.length,
+      uniqueCount: dependencies.length,
       whitelistedCount: whitelistedCount,
       warnCount: warnCount,
       blacklistedCount: blacklistedCount,
