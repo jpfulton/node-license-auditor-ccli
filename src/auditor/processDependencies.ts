@@ -3,7 +3,17 @@ import {
   DependencyOutputter,
 } from "@jpfulton/license-auditor-common";
 
-const parseLicenses =
+/**
+ * Factory function that returns a function to process an array of dependencies
+ * and outputs information about them.
+ * @param whitelistedLicenses - An array of licenses to whitelist.
+ * @param blacklistedLicenses - An array of licenses to blacklist.
+ * @param infoOutputter - A function that outputs information about a dependency.
+ * @param warnOutputter - A function that outputs a warning about a dependency.
+ * @param errorOutputter - A function that outputs an error about a dependency.
+ * @returns A function that takes an array of dependencies and returns an object with information about the processed dependencies.
+ */
+const dependencyProcessorFactory =
   (
     whitelistedLicenses: string[],
     blacklistedLicenses: string[],
@@ -86,4 +96,4 @@ const parseLicenses =
     };
   };
 
-export default parseLicenses;
+export default dependencyProcessorFactory;

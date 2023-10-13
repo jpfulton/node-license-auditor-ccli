@@ -20,10 +20,10 @@ describe("licenseAuditor DangerJS plugin module with remote configuration", () =
     global.fail = jest.fn();
     global.markdown = jest.fn();
 
-    // mock the parseLicense function with a function that returns
+    // mock the processDependencies function with a function that returns
     // values that include a blacklisted license so that it will be used
     // within the licenseAuditor function called within the tests
-    jest.doMock("../../src/auditor/parseLicenses", () => {
+    jest.doMock("../../src/auditor/processDependencies", () => {
       return jest.fn().mockImplementation(() => {
         return () => {
           return {
@@ -44,8 +44,8 @@ describe("licenseAuditor DangerJS plugin module with remote configuration", () =
     global.fail = undefined;
     global.markdown = undefined;
 
-    // reset the mock for parseLicenseFactory
-    jest.unmock("../../src/auditor/parseLicenses");
+    // reset the mock for processDependenciesFactory
+    jest.unmock("../../src/auditor/processDependencies");
 
     // reset the licenseAuditor function
     licenseAuditor = undefined;

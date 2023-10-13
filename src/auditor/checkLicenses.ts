@@ -2,9 +2,9 @@ import {
   DependencyOutputter,
   MetadataOutputter,
 } from "@jpfulton/license-auditor-common";
-import { findAllLicenses } from "./licenseChecker.js";
-import { noLicenses, noPathSpecified } from "./messages.js";
-import parseLicensesFactory from "./parseLicenses.js";
+import { findAllLicenses } from "./licenseChecker";
+import { noLicenses, noPathSpecified } from "./messages";
+import dependencyProcessorFactory from "./processDependencies";
 
 const checkLicenses = async (
   whitelistedLicenses: string[],
@@ -26,7 +26,7 @@ const checkLicenses = async (
       return console.error(noLicenses);
     }
 
-    const parse = parseLicensesFactory(
+    const process = dependencyProcessorFactory(
       whitelistedLicenses,
       blacklistedLicenses,
       infoOutputter,
@@ -34,7 +34,7 @@ const checkLicenses = async (
       errorOutputter
     );
 
-    const result = parse(licenses);
+    const result = process(licenses);
     const {
       uniqueCount,
       whitelistedCount,

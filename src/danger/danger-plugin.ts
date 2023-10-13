@@ -9,7 +9,11 @@ import {
   getConfigurationFromUrl,
   getLicensesMarkdown,
 } from "@jpfulton/license-auditor-common";
-import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
+import {
+  dependencyProcessorFactory,
+  findAllLicenses,
+  noLicenses,
+} from "../auditor";
 import { getCurrentVersionString } from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/node-license-auditor-cli";
@@ -71,7 +75,7 @@ export const licenseAuditor = async (
       return warn(noLicenses);
     }
 
-    const parse = parseLicenseFactory(
+    const process = dependencyProcessorFactory(
       auditorConfig.whiteList,
       auditorConfig.blackList,
       emptyOutputter,
@@ -79,7 +83,7 @@ export const licenseAuditor = async (
       errorOutputter
     );
 
-    const result = parse(licenses);
+    const result = process(licenses);
     const {
       uniqueCount,
       whitelistedCount,
