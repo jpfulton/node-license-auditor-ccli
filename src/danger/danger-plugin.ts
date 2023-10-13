@@ -8,6 +8,7 @@ import {
   getConfiguration,
   getConfigurationFromUrl,
   getCurrentVersionString,
+  getLicensesMarkdown,
 } from "@jpfulton/license-auditor-common";
 import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
 
@@ -144,11 +145,9 @@ const errorOutputter: DependencyOutputter = (license: Dependency) => {
   return markdownOutputter(":red_circle:", license);
 };
 
-const markdownOutputter = (icon: string, license: Dependency) => {
-  const { name, version, licenses } = license;
-  const licenseString = Array.isArray(licenses)
-    ? licenses.join(", ")
-    : licenses;
+const markdownOutputter = (icon: string, dependency: Dependency) => {
+  const { name, version } = dependency;
+  const licenseString = getLicensesMarkdown(dependency);
 
   return `| ${icon} | ${name} | ${version} | ${licenseString} |`;
 };
