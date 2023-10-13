@@ -1837,12 +1837,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpfulton/license-auditor-common@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@jpfulton/license-auditor-common@npm:0.0.2"
+"@jpfulton/license-auditor-common@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@jpfulton/license-auditor-common@npm:0.0.5"
   dependencies:
     node-fetch: 2
-  checksum: ea22987e9206341d8917e2f099cb040791b3ec912a17135c4ea0daa95469d51fb377a600bd23783a777f00fa593fe7f8b2438e129c31a9dcfacfdcdda4528b16
+  checksum: 7082df3d1250c6d8f7721b08335ef25e66059e05c40ab3573b491a326c431d6859be3054f6b66cc9efa82e6b992b4bb283712bc99de256914d3a56e6ea87d7ba
   languageName: node
   linkType: hard
 
@@ -1856,7 +1856,7 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.22.15
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.22.15
-    "@jpfulton/license-auditor-common": ^0.0.2
+    "@jpfulton/license-auditor-common": ^0.0.5
     "@seadub/danger-plugin-eslint": ^3.0.2
     "@tsconfig/node18": ^18.2.1
     "@types/bluebird": ^3.5.39
