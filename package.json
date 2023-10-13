@@ -50,7 +50,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@jpfulton/license-auditor-common": "^0.0.5",
+    "@jpfulton/license-auditor-common": "^0.0.6",
     "bluebird": "^3.7.2",
     "commander": "^11.0.0",
     "lodash": "^4.17.21",
