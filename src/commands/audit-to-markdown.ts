@@ -1,8 +1,8 @@
 import {
   Dependency,
+  getCallingProjectVersionString,
   getConfiguration,
   getConfigurationFromUrl,
-  getCurrentVersionString,
   getLicensesMarkdown,
 } from "@jpfulton/license-auditor-common";
 import { checkLicenses } from "../auditor";
@@ -13,7 +13,7 @@ export async function auditToMarkdown(
   options: { remote: string }
 ): Promise<void> {
   const rootProjectName = getRootProjectName(pathToProject);
-  const version = getCurrentVersionString();
+  const version = getCallingProjectVersionString();
 
   const configuration = options.remote
     ? await getConfigurationFromUrl(options.remote)
