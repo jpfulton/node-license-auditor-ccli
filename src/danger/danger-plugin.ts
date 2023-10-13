@@ -5,15 +5,15 @@ declare const markdown: (message: string) => void;
 import {
   Dependency,
   DependencyOutputter,
-  getCallingProjectVersionString,
   getConfiguration,
   getConfigurationFromUrl,
   getLicensesMarkdown,
 } from "@jpfulton/license-auditor-common";
 import { findAllLicenses, noLicenses, parseLicenseFactory } from "../auditor";
+import { getCurrentVersionString } from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/node-license-auditor-cli";
-const version = getCallingProjectVersionString();
+const version = getCurrentVersionString();
 
 /**
  * Configuration for the license auditor plugin.
