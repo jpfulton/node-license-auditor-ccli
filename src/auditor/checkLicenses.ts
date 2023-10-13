@@ -1,4 +1,5 @@
 import {
+  Configuration,
   DependencyOutputter,
   MetadataOutputter,
 } from "@jpfulton/license-auditor-common";
@@ -7,8 +8,7 @@ import { noDependencies, noPathSpecified } from "./messages";
 import dependencyProcessorFactory from "./processDependencies";
 
 const checkLicenses = async (
-  whitelistedLicenses: string[],
-  blacklistedLicenses: string[],
+  configuration: Configuration,
   projectPath: string,
   metadataOutputter: MetadataOutputter,
   infoOutputter: DependencyOutputter,
@@ -27,8 +27,7 @@ const checkLicenses = async (
     }
 
     const process = dependencyProcessorFactory(
-      whitelistedLicenses,
-      blacklistedLicenses,
+      configuration,
       infoOutputter,
       warnOutputter,
       errorOutputter

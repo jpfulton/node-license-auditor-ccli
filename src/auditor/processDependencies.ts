@@ -1,6 +1,8 @@
 import {
+  Configuration,
   Dependency,
   DependencyOutputter,
+  mapLicenseByGroupings,
 } from "@jpfulton/license-auditor-common";
 
 /**
@@ -15,8 +17,7 @@ import {
  */
 const dependencyProcessorFactory =
   (
-    whitelistedLicenses: string[],
-    blacklistedLicenses: string[],
+    configuration: Configuration,
     infoOutputter: DependencyOutputter,
     warnOutputter: DependencyOutputter,
     errorOutputter: DependencyOutputter
@@ -33,6 +34,9 @@ const dependencyProcessorFactory =
     warnOutputs: string[];
     blackListOutputs: string[];
   } => {
+    const whitelistedLicenses = configuration.whiteList;
+    const blacklistedLicenses = configuration.blackList;
+
     let whitelistedCount = 0;
     let warnCount = 0;
     let blacklistedCount = 0;
@@ -46,7 +50,9 @@ const dependencyProcessorFactory =
       // test for whitelisted licenses
       // a white listed license is one whose license property is in the whitelist
       const isWhitelisted = dependency.licenses.some((depLicense) =>
-        whitelistedLicenses.includes(depLicense.license)
+        whitelistedLicenses.includes(
+          mapLicenseByGroupings(configuration, depLicense.license)
+        )
       );
 
       if (isWhitelisted) {
@@ -62,7 +68,9 @@ const dependencyProcessorFactory =
       // and does not include a license that is in the whitelist
       const isBlacklisted =
         dependency.licenses.some((depLicense) =>
-          blacklistedLicenses.includes(depLicense.license)
+          blacklistedLicenses.includes(
+            mapLicenseByGroupings(configuration, depLicense.license)
+          )
         ) && !isWhitelisted;
 
       if (!isWhitelisted && !isBlacklisted) {

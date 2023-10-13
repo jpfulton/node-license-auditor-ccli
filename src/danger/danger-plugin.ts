@@ -76,8 +76,7 @@ export const licenseAuditor = async (
     }
 
     const process = dependencyProcessorFactory(
-      auditorConfig.whiteList,
-      auditorConfig.blackList,
+      auditorConfig,
       emptyOutputter,
       warnOutputter,
       errorOutputter
