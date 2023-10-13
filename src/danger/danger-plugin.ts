@@ -11,7 +11,7 @@ import {
 } from "@jpfulton/license-auditor-common";
 import {
   dependencyProcessorFactory,
-  findAllLicenses,
+  findAllDependencies,
   noLicenses,
 } from "../auditor";
 import { getCurrentVersionString } from "../util";
@@ -69,9 +69,9 @@ export const licenseAuditor = async (
         ? await getConfigurationFromUrl(remoteConfigurationUrl)
         : await getConfiguration();
 
-    const licenses = await findAllLicenses(projectPath);
+    const dependencies = await findAllDependencies(projectPath);
 
-    if (!licenses || licenses.length <= 0) {
+    if (!dependencies || dependencies.length <= 0) {
       return warn(noLicenses);
     }
 
@@ -83,7 +83,7 @@ export const licenseAuditor = async (
       errorOutputter
     );
 
-    const result = process(licenses);
+    const result = process(dependencies);
     const {
       uniqueCount,
       whitelistedCount,
@@ -137,16 +137,16 @@ export const licenseAuditor = async (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const emptyOutputter: DependencyOutputter = (_license: Dependency) => {
+const emptyOutputter: DependencyOutputter = (_dependency: Dependency) => {
   return "";
 };
 
-const warnOutputter: DependencyOutputter = (license: Dependency) => {
-  return markdownOutputter(":yellow_circle:", license);
+const warnOutputter: DependencyOutputter = (dependency: Dependency) => {
+  return markdownOutputter(":yellow_circle:", dependency);
 };
 
-const errorOutputter: DependencyOutputter = (license: Dependency) => {
-  return markdownOutputter(":red_circle:", license);
+const errorOutputter: DependencyOutputter = (dependency: Dependency) => {
+  return markdownOutputter(":red_circle:", dependency);
 };
 
 const markdownOutputter = (icon: string, dependency: Dependency) => {

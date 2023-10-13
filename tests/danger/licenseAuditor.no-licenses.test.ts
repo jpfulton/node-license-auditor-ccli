@@ -14,11 +14,11 @@ describe("licenseAuditor when there are no licenses", () => {
     global.fail = jest.fn();
     global.markdown = jest.fn();
 
-    // mock the findAllLicenses function to return an empty array
+    // mock the findAllDependencies function to return an empty array
     // based on an import from the auditor module
     jest.doMock("../../src/auditor", () => {
       return {
-        findAllLicenses: jest.fn().mockImplementation(() => {
+        findAllDependencies: jest.fn().mockImplementation(() => {
           return [];
         }),
         noLicenses: "There are no licenses to check.",
@@ -32,7 +32,7 @@ describe("licenseAuditor when there are no licenses", () => {
     global.fail = undefined;
     global.markdown = undefined;
 
-    // un-mock the findAllLicenses function
+    // un-mock the findAllDependencies function
     jest.unmock("../../src/auditor");
 
     // reset the licenseAuditor function

@@ -2,7 +2,7 @@ import {
   DependencyOutputter,
   MetadataOutputter,
 } from "@jpfulton/license-auditor-common";
-import { findAllLicenses } from "./licenseChecker";
+import { findAllDependencies } from "./licenseChecker";
 import { noLicenses, noPathSpecified } from "./messages";
 import dependencyProcessorFactory from "./processDependencies";
 
@@ -20,7 +20,7 @@ const checkLicenses = async (
   }
 
   try {
-    const licenses = await findAllLicenses(projectPath);
+    const licenses = await findAllDependencies(projectPath);
 
     if (!licenses || licenses.length <= 0) {
       return console.error(noLicenses);

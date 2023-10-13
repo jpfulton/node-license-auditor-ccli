@@ -161,8 +161,8 @@ export const findLicense = async (
   return [{ license: "UNKNOWN", path: "UNKNOWN" }];
 };
 
-// Find all licenses in a project based on a path to the project
-export const findAllLicenses = (projectPath: string) =>
+// Find all dependencies in a project based on a path to the project
+export const findAllDependencies = (projectPath: string) =>
   new Promise<Dependency[]>((resolve, reject) => {
     // get the name of the root project from its package.json
     const rootProject = JSON.parse(
@@ -198,7 +198,7 @@ export const findAllLicenses = (projectPath: string) =>
         .filter((item) => item.name); // filter out packages without a name
 
       // get the license data for each package
-      let licenseData: Dependency[] = await mapSeries(data, async (item) => ({
+      let dependencies: Dependency[] = await mapSeries(data, async (item) => ({
         licenses: await findLicense(item, dirPath), // returns the licenses and the path of the license file
         path: item.path,
         name: item.name,
@@ -210,13 +210,13 @@ export const findAllLicenses = (projectPath: string) =>
       }));
 
       // remove duplicates based on common name, version and licenses array
-      licenseData = removeDuplicates(licenseData);
+      dependencies = removeDuplicates(dependencies);
 
       // sort by name
-      licenseData.sort((a, b) => a.name.localeCompare(b.name));
+      dependencies.sort((a, b) => a.name.localeCompare(b.name));
 
       // resolve the promise with the license data
-      resolve(licenseData);
+      resolve(dependencies);
     });
   });
 
@@ -234,4 +234,4 @@ export function splitAndFilterPackages(stdout: string): string[] {
     );
 }
 
-export default findAllLicenses;
+export default findAllDependencies;
