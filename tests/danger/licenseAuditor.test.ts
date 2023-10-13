@@ -14,10 +14,10 @@ describe("licenseAuditor DangerJS plugin module", () => {
     global.fail = jest.fn();
     global.markdown = jest.fn();
 
-    // mock the parseLicense function with a function that returns
+    // mock the processDependencies function with a function that returns
     // values that include a blacklisted license so that it will be used
     // within the licenseAuditor function called within the tests
-    jest.doMock("../../src/auditor/parseLicenses", () => {
+    jest.doMock("../../src/auditor/processDependencies", () => {
       return jest.fn().mockImplementation(() => {
         return () => {
           return {
@@ -38,8 +38,8 @@ describe("licenseAuditor DangerJS plugin module", () => {
     global.fail = undefined;
     global.markdown = undefined;
 
-    // reset the mock for parseLicenseFactory
-    jest.unmock("../../src/auditor/parseLicenses");
+    // reset the mock
+    jest.unmock("../../src/auditor/processDependencies");
 
     // reset the licenseAuditor function
     licenseAuditor = undefined;
@@ -173,7 +173,7 @@ describe("licenseAuditor DangerJS plugin module", () => {
     };
     const message = `| :hash: Unique Licenses | :green_circle: Whitelisted Licenses | :yellow_circle: Warned Licenses | :red_circle: Blacklisted Licenses |
 |---|---|---|---|
-| 3 | 1 | 1 | 1 |`; // values from mocked parseLicenseFactory result
+| 3 | 1 | 1 | 1 |`; // values from mocked result
 
     // act
     await licenseAuditor!(config);

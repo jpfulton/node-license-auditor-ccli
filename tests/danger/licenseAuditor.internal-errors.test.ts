@@ -21,8 +21,8 @@ describe("licenseAuditor when there are internal errors", () => {
     global.fail = undefined;
     global.markdown = undefined;
 
-    // reset the mock for parseLicenseFactory
-    jest.unmock("../../src/auditor/parseLicenses");
+    // reset the mock
+    jest.unmock("../../src/auditor/processDependencies");
 
     // reset the licenseAuditor function
     licenseAuditor = undefined;
@@ -31,9 +31,9 @@ describe("licenseAuditor when there are internal errors", () => {
     jest.resetModules();
   });
 
-  it("should call fail if there is an error in parseLicenses", async () => {
+  it("should call fail if there is an error in processDependencies", async () => {
     // arrange
-    jest.doMock("../../src/auditor/parseLicenses", () => {
+    jest.doMock("../../src/auditor/processDependencies", () => {
       // mock the parseLicenseFactory function to throw an error
       return jest.fn().mockImplementation(() => {
         return () => {

@@ -1,14 +1,14 @@
 import {
+  Configuration,
   DependencyOutputter,
   MetadataOutputter,
 } from "@jpfulton/license-auditor-common";
-import { findAllLicenses } from "./licenseChecker.js";
-import { noLicenses, noPathSpecified } from "./messages.js";
-import parseLicensesFactory from "./parseLicenses.js";
+import { findAllDependencies } from "./findDependencies";
+import { noDependencies, noPathSpecified } from "./messages";
+import dependencyProcessorFactory from "./processDependencies";
 
 const checkLicenses = async (
-  whitelistedLicenses: string[],
-  blacklistedLicenses: string[],
+  configuration: Configuration,
   projectPath: string,
   metadataOutputter: MetadataOutputter,
   infoOutputter: DependencyOutputter,
@@ -20,21 +20,20 @@ const checkLicenses = async (
   }
 
   try {
-    const licenses = await findAllLicenses(projectPath);
+    const dependencies = await findAllDependencies(projectPath);
 
-    if (!licenses || licenses.length <= 0) {
-      return console.error(noLicenses);
+    if (!dependencies || dependencies.length <= 0) {
+      return console.error(noDependencies);
     }
 
-    const parse = parseLicensesFactory(
-      whitelistedLicenses,
-      blacklistedLicenses,
+    const process = dependencyProcessorFactory(
+      configuration,
       infoOutputter,
       warnOutputter,
       errorOutputter
     );
 
-    const result = parse(licenses);
+    const result = process(dependencies);
     const {
       uniqueCount,
       whitelistedCount,

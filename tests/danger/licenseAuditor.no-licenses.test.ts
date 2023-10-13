@@ -7,21 +7,21 @@ declare let licenseAuditor:
   | ((config: Partial<IPluginConfig>) => Promise<void>)
   | undefined;
 
-describe("licenseAuditor when there are no licenses", () => {
+describe("licenseAuditor when there are no dependencies", () => {
   beforeAll(() => {
     // mock the danger functions warn, fail, and markdown and attach them to the global object
     global.warn = jest.fn();
     global.fail = jest.fn();
     global.markdown = jest.fn();
 
-    // mock the findAllLicenses function to return an empty array
+    // mock the findAllDependencies function to return an empty array
     // based on an import from the auditor module
     jest.doMock("../../src/auditor", () => {
       return {
-        findAllLicenses: jest.fn().mockImplementation(() => {
+        findAllDependencies: jest.fn().mockImplementation(() => {
           return [];
         }),
-        noLicenses: "There are no licenses to check.",
+        noDependencies: "There are no dependencies to check.",
       };
     });
   });
@@ -32,7 +32,7 @@ describe("licenseAuditor when there are no licenses", () => {
     global.fail = undefined;
     global.markdown = undefined;
 
-    // un-mock the findAllLicenses function
+    // un-mock the findAllDependencies function
     jest.unmock("../../src/auditor");
 
     // reset the licenseAuditor function
@@ -42,7 +42,7 @@ describe("licenseAuditor when there are no licenses", () => {
     jest.resetModules();
   });
 
-  it("should call warn if there are no licenses", async () => {
+  it("should call warn if there are no dependencies", async () => {
     // arrange
     licenseAuditor = require("../../src/danger/danger-plugin").licenseAuditor;
     const config = {
@@ -50,7 +50,7 @@ describe("licenseAuditor when there are no licenses", () => {
       projectPath: process.cwd(),
       showMarkdownSummary: false,
     };
-    const message = `There are no licenses to check.`;
+    const message = `There are no dependencies to check.`;
 
     // act
     await licenseAuditor!(config);

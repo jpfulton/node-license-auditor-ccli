@@ -1,5 +1,5 @@
 export const noPathSpecified = "Project path is not specified.";
 
-export const noLicenses = "There are no licenses to check.";
+export const noDependencies = "There are no dependencies to check.";
 
-export default { noPathSpecified, noLicenses };
+export default { noPathSpecified, noDependencies };

@@ -1,12 +1,12 @@
 import checkLicenses from "./checkLicenses.js";
-import { findAllLicenses } from "./licenseChecker.js";
-import { noLicenses, noPathSpecified } from "./messages.js";
-import parseLicenseFactory from "./parseLicenses.js";
+import { findAllDependencies } from "./findDependencies.js";
+import { noDependencies, noPathSpecified } from "./messages.js";
+import dependencyProcessorFactory from "./processDependencies.js";
 
 export {
   checkLicenses,
-  findAllLicenses,
-  noLicenses,
+  dependencyProcessorFactory,
+  findAllDependencies,
+  noDependencies,
   noPathSpecified,
-  parseLicenseFactory,
 };

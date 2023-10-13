@@ -21,8 +21,7 @@ export async function auditToCsv(
 
   if (options.data) {
     checkLicenses(
-      configuration.whiteList,
-      configuration.blackList,
+      configuration,
       pathToProject,
       metadataCsv,
       infoCsv,

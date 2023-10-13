@@ -1,12 +1,23 @@
 import {
+  Configuration,
   Dependency,
   DependencyOutputter,
+  mapLicenseByGroupings,
 } from "@jpfulton/license-auditor-common";
 
-const parseLicenses =
+/**
+ * Factory function that returns a function to process an array of dependencies
+ * and outputs information about them.
+ * @param whitelistedLicenses - An array of licenses to whitelist.
+ * @param blacklistedLicenses - An array of licenses to blacklist.
+ * @param infoOutputter - A function that outputs information about a dependency.
+ * @param warnOutputter - A function that outputs a warning about a dependency.
+ * @param errorOutputter - A function that outputs an error about a dependency.
+ * @returns A function that takes an array of dependencies and returns an object with information about the processed dependencies.
+ */
+const dependencyProcessorFactory =
   (
-    whitelistedLicenses: string[],
-    blacklistedLicenses: string[],
+    configuration: Configuration,
     infoOutputter: DependencyOutputter,
     warnOutputter: DependencyOutputter,
     errorOutputter: DependencyOutputter
@@ -23,6 +34,9 @@ const parseLicenses =
     warnOutputs: string[];
     blackListOutputs: string[];
   } => {
+    const whitelistedLicenses = configuration.whiteList;
+    const blacklistedLicenses = configuration.blackList;
+
     let whitelistedCount = 0;
     let warnCount = 0;
     let blacklistedCount = 0;
@@ -36,7 +50,9 @@ const parseLicenses =
       // test for whitelisted licenses
       // a white listed license is one whose license property is in the whitelist
       const isWhitelisted = dependency.licenses.some((depLicense) =>
-        whitelistedLicenses.includes(depLicense.license)
+        whitelistedLicenses.includes(
+          mapLicenseByGroupings(configuration, depLicense.license)
+        )
       );
 
       if (isWhitelisted) {
@@ -52,7 +68,9 @@ const parseLicenses =
       // and does not include a license that is in the whitelist
       const isBlacklisted =
         dependency.licenses.some((depLicense) =>
-          blacklistedLicenses.includes(depLicense.license)
+          blacklistedLicenses.includes(
+            mapLicenseByGroupings(configuration, depLicense.license)
+          )
         ) && !isWhitelisted;
 
       if (!isWhitelisted && !isBlacklisted) {
@@ -86,4 +104,4 @@ const parseLicenses =
     };
   };
 
-export default parseLicenses;
+export default dependencyProcessorFactory;
