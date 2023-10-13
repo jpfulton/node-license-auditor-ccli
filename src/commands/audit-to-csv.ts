@@ -1,9 +1,9 @@
-import { checkLicenses } from "../auditor";
-import { License } from "../models";
 import {
+  Dependency,
   getConfiguration,
   getConfigurationFromUrl,
-} from "../util/configuration.js";
+} from "@jpfulton/license-auditor-common";
+import { checkLicenses } from "../auditor";
 
 export async function auditToCsv(
   pathToProject: string,
@@ -44,27 +44,34 @@ const metadataCsv = (
   // eslint-disable-next-line @typescript-eslint/no-empty-function
 ) => {};
 
-const infoCsv = (licenseObj: License) => {
+const infoCsv = (licenseObj: Dependency) => {
   return csv("OK", licenseObj);
 };
 
-const warnCsv = (licenseObj: License) => {
+const warnCsv = (licenseObj: Dependency) => {
   return csv("WARN", licenseObj);
 };
 
-const errorCsv = (licenseObj: License) => {
+const errorCsv = (licenseObj: Dependency) => {
   return csv("ERROR", licenseObj);
 };
 
-function csv(status: string, licenseObj: License) {
-  return `"${licenseObj.rootProjectName}",
+function csv(status: string, dependency: Dependency) {
+  const licensesString = dependency.licenses
+    .map((license) => license.license)
+    .join(", ");
+  const licensePath = dependency.licenses
+    .map((license) => license.path)
+    .join(", ");
+
+  return `"${dependency.rootProjectName}",
 "${status}",
-"${licenseObj.name}",
-"${licenseObj.version}",
-"${licenseObj.licenses}",
-"${licenseObj.publisher ?? ""}",
-"${licenseObj.email ?? ""}",
-"${licenseObj.repository ?? ""}",
-"${licenseObj.path}",
-"${licenseObj.licensePath}"`.replace(/\n/g, ""); // remove newlines
+"${dependency.name}",
+"${dependency.version}",
+"${licensesString}",
+"${dependency.publisher ?? ""}",
+"${dependency.email ?? ""}",
+"${dependency.repository ?? ""}",
+"${dependency.path}",
+"${licensePath}"`.replace(/\n/g, ""); // remove newlines
 }

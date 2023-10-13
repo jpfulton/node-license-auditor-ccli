@@ -1,11 +1,12 @@
-import { checkLicenses } from "../auditor";
-import { License } from "../models";
 import {
+  Dependency,
   getConfiguration,
   getConfigurationFromUrl,
   getCurrentVersionString,
-  getRootProjectName,
-} from "../util";
+  getLicensesMarkdown,
+} from "@jpfulton/license-auditor-common";
+import { checkLicenses } from "../auditor";
+import { getRootProjectName } from "../util";
 
 export async function auditToMarkdown(
   pathToProject: string,
@@ -67,28 +68,33 @@ const metadataMarkdown = (
   markdownTableHeader();
 };
 
-const infoMarkdown = (licenseObj: License) => {
+const infoMarkdown = (licenseObj: Dependency) => {
   return markdown(":green_circle:", licenseObj);
 };
 
-const warnMarkdown = (licenseObj: License) => {
+const warnMarkdown = (licenseObj: Dependency) => {
   return markdown(":yellow_circle:", licenseObj);
 };
 
-const errorMarkdown = (licenseObj: License) => {
+const errorMarkdown = (licenseObj: Dependency) => {
   return markdown(":red_circle:", licenseObj);
 };
 
-const markdown = (icon: string, licenseItem: License): string => {
+const markdown = (icon: string, dependency: Dependency): string => {
+  const licensesString = getLicensesMarkdown(dependency);
+  const licensePath = dependency.licenses
+    .map((license) => license.path)
+    .join(", ");
+
   return `| ${icon} 
-| ${licenseItem.name} 
-| ${licenseItem.version} 
-| ${licenseItem.licenses} 
-| ${licenseItem.publisher ?? ""} 
-| ${licenseItem.email ?? ""} 
-| ${licenseItem.repository ?? ""} 
-| ${licenseItem.path} 
-| ${licenseItem.licensePath} |`.replaceAll("\n", ""); // Remove newlines from the license text
+| ${dependency.name} 
+| ${dependency.version} 
+| ${licensesString} 
+| ${dependency.publisher ?? ""} 
+| ${dependency.email ?? ""} 
+| ${dependency.repository ?? ""} 
+| ${dependency.path} 
+| ${licensePath} |`.replaceAll("\n", ""); // Remove newlines from the license text
 };
 
 const markdownTableHeader = () => {

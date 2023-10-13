@@ -1,4 +1,7 @@
-import { LicenseOutputter, MetadataOutputter } from "../util";
+import {
+  DependencyOutputter,
+  MetadataOutputter,
+} from "@jpfulton/license-auditor-common";
 import { findAllLicenses } from "./licenseChecker.js";
 import { noLicenses, noPathSpecified } from "./messages.js";
 import parseLicensesFactory from "./parseLicenses.js";
@@ -8,9 +11,9 @@ const checkLicenses = async (
   blacklistedLicenses: string[],
   projectPath: string,
   metadataOutputter: MetadataOutputter,
-  infoOutputter: LicenseOutputter,
-  warnOutputter: LicenseOutputter,
-  errorOutputter: LicenseOutputter
+  infoOutputter: DependencyOutputter,
+  warnOutputter: DependencyOutputter,
+  errorOutputter: DependencyOutputter
 ) => {
   if (!projectPath) {
     return console.error(noPathSpecified);
