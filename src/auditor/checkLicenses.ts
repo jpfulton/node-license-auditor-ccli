@@ -2,7 +2,7 @@ import {
   DependencyOutputter,
   MetadataOutputter,
 } from "@jpfulton/license-auditor-common";
-import { findAllDependencies } from "./licenseChecker";
+import { findAllDependencies } from "./findDependencies";
 import { noLicenses, noPathSpecified } from "./messages";
 import dependencyProcessorFactory from "./processDependencies";
 

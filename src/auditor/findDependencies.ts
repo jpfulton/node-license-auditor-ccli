@@ -8,7 +8,7 @@ import lodash from "lodash";
 const { mapSeries } = bluebird;
 const { get } = lodash; // used to access properties of an object given a path
 
-import Retriever from "./retriever.js";
+import Retriever from "./retriever";
 
 import {
   Dependency,

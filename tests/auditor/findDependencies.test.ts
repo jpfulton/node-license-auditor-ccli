@@ -3,7 +3,7 @@ import {
   findFile,
   findLicense,
   splitAndFilterPackages,
-} from "../../src/auditor/licenseChecker";
+} from "../../src/auditor/findDependencies";
 
 // findDirPath should return the path of the current working directory
 describe("findDirPath", () => {

@@ -1,5 +1,5 @@
 import checkLicenses from "./checkLicenses.js";
-import { findAllDependencies } from "./licenseChecker.js";
+import { findAllDependencies } from "./findDependencies.js";
 import { noLicenses, noPathSpecified } from "./messages.js";
 import dependencyProcessorFactory from "./processDependencies.js";
 
