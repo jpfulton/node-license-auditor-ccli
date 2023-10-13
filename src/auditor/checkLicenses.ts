@@ -3,7 +3,7 @@ import {
   MetadataOutputter,
 } from "@jpfulton/license-auditor-common";
 import { findAllDependencies } from "./findDependencies";
-import { noLicenses, noPathSpecified } from "./messages";
+import { noDependencies, noPathSpecified } from "./messages";
 import dependencyProcessorFactory from "./processDependencies";
 
 const checkLicenses = async (
@@ -20,10 +20,10 @@ const checkLicenses = async (
   }
 
   try {
-    const licenses = await findAllDependencies(projectPath);
+    const dependencies = await findAllDependencies(projectPath);
 
-    if (!licenses || licenses.length <= 0) {
-      return console.error(noLicenses);
+    if (!dependencies || dependencies.length <= 0) {
+      return console.error(noDependencies);
     }
 
     const process = dependencyProcessorFactory(
@@ -34,7 +34,7 @@ const checkLicenses = async (
       errorOutputter
     );
 
-    const result = process(licenses);
+    const result = process(dependencies);
     const {
       uniqueCount,
       whitelistedCount,

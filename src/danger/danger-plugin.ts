@@ -12,7 +12,7 @@ import {
 import {
   dependencyProcessorFactory,
   findAllDependencies,
-  noLicenses,
+  noDependencies,
 } from "../auditor";
 import { getCurrentVersionString } from "../util";
 
@@ -72,7 +72,7 @@ export const licenseAuditor = async (
     const dependencies = await findAllDependencies(projectPath);
 
     if (!dependencies || dependencies.length <= 0) {
-      return warn(noLicenses);
+      return warn(noDependencies);
     }
 
     const process = dependencyProcessorFactory(
