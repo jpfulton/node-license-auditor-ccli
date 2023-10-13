@@ -53,7 +53,6 @@
     "@jpfulton/license-auditor-common": "^0.0.2",
     "bluebird": "^3.7.2",
     "commander": "^11.0.0",
-    "filedirname": "^2.7.0",
     "lodash": "^4.17.21",
     "node-fetch": "2"
   },
